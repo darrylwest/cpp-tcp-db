@@ -4,9 +4,10 @@
 
 #pragma once
 
+// #include <tcpdb/config.hpp>
+
 namespace server {
-    struct Config {
-        std::string host;
-        std::string port;
-    };
+    int start();
+    void shutdown();
 }
+

@@ -36,7 +36,7 @@ struct MainTestSetup {
 MainTestSetup setup;
 
 // Tests here
-TEST_CASE("Test Version", "[version]") {
+TEST_CASE("Version tests", "[version]") {
     const auto vers = tcpdb::Version();
     REQUIRE(vers.major == 0);
     REQUIRE(vers.minor == 2);
