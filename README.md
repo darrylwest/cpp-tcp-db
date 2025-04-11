@@ -1,49 +1,24 @@
-# Tiny Application Starter
+# TCP Database
 
 ```
- _______ __                _______ __               __                _______              
-|_     _|__|.-----.--.--. |     __|  |_.---.-.----.|  |_.-----.----. |   _   |.-----.-----.
-  |   | |  ||     |  |  | |__     |   _|  _  |   _||   _|  -__|   _| |       ||  _  |  _  |
-  |___| |__||__|__|___  | |_______|____|___._|__|  |____|_____|__|   |___|___||   __|   __|
-                  |_____|                                                     |__|  |__|   
+_____                    ______________                                     ______
+__  /______________      ______  /__  /_     ______     _______________________  /
+_  __/  ___/__  __ \     _  __  /__  __ \    ___/ /_    __  ___/  _ \__  __ \_  / 
+/ /_ / /__ __  /_/ /     / /_/ / _  /_/ /    /_  __/    _  /   /  __/_  /_/ /  /  
+\__/ \___/ _  .___/      \__,_/  /_.___/      /_/       /_/    \___/_  .___//_/   
+           /_/                                                      /_/           
 ```
 
-The `kvstore branch` addes quickkv and domain keys for a small, in-memory k/v store.
+A tcp database with REPL.
 
 ## Features
 
-* cmake 3.30
-* c++23
-* osx, linux
  
-## Includes
-
-* spdlog
-* Catch2
-* quickkv
-* domainkeys
-
-## File Structure
-
-```
-tiny-app
-  | 
-  └─include
-    ├── app
-    │   └── tiny.hpp
-    └── vendor
-    ├── ansi_colors.hpp
-    └── cxxopts.hpp
-  └─src
-    └── main.cpp
-  └─tests
-    └── main_unit.cpp
-```
-
 ## Use
 
 * clone or download this project
-* change include path to real name
-* remove / replace `.git` and do a `git init`
+* build on mac or linux
+* start the service
+* run the repl
 
-###### 2025.03.27 | dpw
+###### 2025.04.11 | dpw
