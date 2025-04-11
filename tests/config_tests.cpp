@@ -11,3 +11,7 @@ TEST_CASE("Config tests", "[server]") {
 TEST_CASE("Config tests", "[client]") {
     REQUIRE(true);
 }
+
+TEST_CASE("Config tests", "[config]") {
+    REQUIRE(true);
+}

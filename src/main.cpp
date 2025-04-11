@@ -11,10 +11,9 @@
 
 int main() {
     const auto vers = tcpdb::Version();
-    constexpr auto lang = "c++";
-    spdlog::info("Hello and welcome to {} tiny application, version: {}", lang, vers.to_string());
+    spdlog::info("Hello and welcome to the tcp-db application, version: {}", vers.to_string());
 
-    // create the k/v store
+    // create the k/v store (TODO move to server)
     quickkv::KVStore store;
 
     // create a unique timestamp key

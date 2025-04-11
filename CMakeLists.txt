@@ -92,8 +92,9 @@ add_executable(tcpdb
 
 add_executable(unit_tests 
     tests/main_unit.cpp 
+    tests/config_tests.cpp
     tests/server_tests.cpp
-        tests/config_tests.cpp
+    tests/client_tests.cpp
 )
 
 # Function to set up target properties

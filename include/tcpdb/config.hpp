@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <string>
+
 namespace config {
     struct Server {
         std::string host;
@@ -20,5 +22,10 @@ namespace config {
         std::string logs;
         
         // to_string
+    };
+
+    struct Config {
+        Server server;
+        Client client;
     };
 }

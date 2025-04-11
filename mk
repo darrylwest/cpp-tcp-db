@@ -30,6 +30,11 @@ do
 
             shift
         ;;
+        all)
+            ./mk clobber init build unit
+
+            exit 0;
+        ;;
         init)
             [ -d build ] || mkdir build
             (cd build && cmake ..)
