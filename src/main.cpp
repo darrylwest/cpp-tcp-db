@@ -4,7 +4,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include <tcpdb/tiny.hpp>
+#include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
 #include <domainkeys/keys.hpp>
 #include <quickkv/quickkv.hpp>

@@ -1,10 +1,9 @@
 //
-// Created by Darryl West on 3/22/25.
+// 2025-04-11 20:26:27 dpw
 //
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() function
 
 #include <catch2/catch_all.hpp>
-#include <tcpdb/tiny.hpp>
 #include <tcpdb/version.hpp>
 #include <vendor/ansi_colors.hpp>
 #include <spdlog/spdlog.h>
@@ -40,8 +39,8 @@ MainTestSetup setup;
 TEST_CASE("Test Version", "[version]") {
     const auto vers = tcpdb::Version();
     REQUIRE(vers.major == 0);
-    REQUIRE(vers.minor == 1);
+    REQUIRE(vers.minor == 2);
     REQUIRE(vers.patch == 1);
     REQUIRE(vers.build >= 100);
-    REQUIRE(vers.to_string().starts_with("0.1.1"));
+    REQUIRE(vers.to_string().starts_with("0.2."));
 }

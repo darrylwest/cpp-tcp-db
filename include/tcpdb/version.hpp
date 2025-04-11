@@ -12,7 +12,7 @@ namespace tcpdb {
     // version numbers are year.month.day.build where the year/month/day is the release date
     struct Version {
         int major = 0;
-        int minor = 1;
+        int minor = 2;
         int patch = 1;
         int build = 101;
 
