@@ -10,7 +10,7 @@
 #include <quickkv/quickkv.hpp>
 
 int main() {
-    const auto vers = app::Version();
+    const auto vers = tcpdb::Version();
     constexpr auto lang = "c++";
     spdlog::info("Hello and welcome to {} tiny application, version: {}", lang, vers.to_string());
 

@@ -38,7 +38,7 @@ MainTestSetup setup;
 
 // Tests here
 TEST_CASE("Test Version", "[version]") {
-    const auto vers = app::Version();
+    const auto vers = tcpdb::Version();
     REQUIRE(vers.major == 0);
     REQUIRE(vers.minor == 1);
     REQUIRE(vers.patch == 1);
