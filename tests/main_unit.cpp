@@ -4,8 +4,8 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() function
 
 #include <catch2/catch_all.hpp>
-#include <app/tiny.hpp>
-#include <app/version.hpp>
+#include <tcpdb/tiny.hpp>
+#include <tcpdb/version.hpp>
 #include <vendor/ansi_colors.hpp>
 #include <spdlog/spdlog.h>
 #include <print>
@@ -37,7 +37,7 @@ struct MainTestSetup {
 MainTestSetup setup;
 
 // Tests here
-TEST_CASE("Version test", "[version]") {
+TEST_CASE("Test Version", "[version]") {
     const auto vers = app::Version();
     REQUIRE(vers.major == 0);
     REQUIRE(vers.minor == 1);
