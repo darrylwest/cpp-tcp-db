@@ -115,6 +115,12 @@ function(setup_target_properties target)
     )
     target_link_libraries(${target} PRIVATE ${DEPENDENT_LIBRARIES})
 
+    set_target_properties(${target} PROPERTIES
+        INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib"
+        BUILD_WITH_INSTALL_RPATH TRUE
+    )
+
+
     # Set compiler options
     target_compile_options(${target} PRIVATE
             -Wall
