@@ -33,7 +33,7 @@ do
         all)
             ./mk clobber init build unit
 
-            exit 0;
+            shift
         ;;
         init)
             [ -d build ] || mkdir build
