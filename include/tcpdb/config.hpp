@@ -28,4 +28,6 @@ namespace config {
         Server server;
         Client client;
     };
+
+    Config load_config();
 }

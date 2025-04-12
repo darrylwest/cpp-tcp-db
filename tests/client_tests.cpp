@@ -7,3 +7,11 @@
 TEST_CASE("Client tests", "[configure]") {
     REQUIRE(true);
 }
+
+TEST_CASE("Client tests", "[start]") {
+    REQUIRE(true);
+}
+
+TEST_CASE("Client tests", "[help_text]") {
+    REQUIRE(true);
+}

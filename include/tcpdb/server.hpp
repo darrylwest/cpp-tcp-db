@@ -4,10 +4,10 @@
 
 #pragma once
 
-// #include <tcpdb/config.hpp>
+#include <tcpdb/config.hpp>
 
 namespace server {
-    int start();
+    int start(config::Config& config);
     void shutdown();
 }
 

@@ -5,10 +5,10 @@
 #pragma once
 
 #include <string>
+#include <tcpdb/config.hpp>
 
 namespace client {
-    // start the repl
-    int start(const tcpdb::Config& config);
+    int start(config::Config& config);
     std::string help_text();
 }
 
