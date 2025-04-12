@@ -11,8 +11,19 @@ _  __/  ___/__  __ \     _  __  /__  __ \    ___/ /_    __  ___/  _ \__  __ \_  
 
 A tcp database with REPL.
 
-## Features
+## Overview
 
+### Server
+
+* a tcp server connected to a database
+* listens for connections
+* responds to client requests
+
+### Client
+
+* a REPL that interfaces to db server
+* logs commands and responses
+* shows help with full API
  
 ## Use
 

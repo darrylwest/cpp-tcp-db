@@ -11,7 +11,7 @@ namespace config {
         std::string host;
         int port;
         bool encrypted;
-        std::string data
+        std::string data;
         std::string logs;
 
         // to_string
