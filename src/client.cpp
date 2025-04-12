@@ -5,11 +5,17 @@
 #include <spdlog/spdlog.h>
 
 #include <tcpdb/client.hpp>
+#include <tcpdb/config.hpp>
 #include <tcpdb/version.hpp>
 
-int main() {
-    const auto vers = tcpdb::Version();
-    spdlog::info("tcp-db client application, version: {}", vers.to_string());
+namespace tcpdb::client {
+    int start(const tcpdb::config::Config& config) {
+        spdlog::info("Starting tcpdb client: {}", config.to_string());
 
-    return 0;
+        return 0;
+    }
+
+    std::string help_text() {
+        return "my help text";
+    }
 }

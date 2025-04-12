@@ -3,4 +3,23 @@
 //
 #include <catch2/catch_all.hpp>
 
-TEST_CASE("Server tests", "[configure]") { REQUIRE(true); }
+#include <spdlog/spdlog.h>
+#include <tcpdb/config.hpp>
+#include <tcpdb/server.hpp>
+
+auto create_test_config() {
+    tcpdb::config::Config config;
+    config.server.host = "localhost";
+    config.server.port = 9944;
+    config.client.connect_timeout = 5000;
+
+    return config;
+}
+
+TEST_CASE("Server tests", "[configure]") {
+    // tcpdb::config::Config config;
+
+    auto exit_code = 0; // tcpdb::server::start(config);
+
+    REQUIRE(exit_code == 0);
+}

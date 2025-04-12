@@ -6,7 +6,8 @@
 
 #include <tcpdb/config.hpp>
 
-namespace server {
-    int start(config::Config& config);
+namespace tcpdb::server {
+
+    int start(const config::Config& config);
     void shutdown();
 }  // namespace server

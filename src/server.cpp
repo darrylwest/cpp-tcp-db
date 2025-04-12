@@ -3,28 +3,35 @@
 //
 
 #include <spdlog/spdlog.h>
+#include <atomic>
+#include <thread>
 
 #include <domainkeys/keys.hpp>
 #include <quickkv/quickkv.hpp>
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
 
-int main() {
-    const auto vers = tcpdb::Version();
-    spdlog::info("tcp-db server application, version: {}", vers.to_string());
+namespace tcpdb::server {
 
-    // create the k/v store (TODO move to server)
+    std::atomic_flag halt_threads;
+
     quickkv::KVStore store;
 
-    // create a unique timestamp key
-    auto key = domainkeys::keys::create_timestamp_key();
-    spdlog::info("key: {}", key.to_string());
+    int start(const config::Config& config) {
 
-    // write to the store
-    store.set(key.to_string(), "hello tiny kv store.");
+        spdlog::info("Starting server: {}", config.to_string());
 
-    // show the store size
-    spdlog::info("store size: {}", store.size());
+        halt_threads.clear();
 
-    return 0;
+        return 0;
+    }
+
+    void shutdown() {
+        // TODO save the database
+
+        halt_threads.test_and_set();
+    }
+
 }
+
+

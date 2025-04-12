@@ -7,7 +7,7 @@
 #include <string>
 #include <tcpdb/config.hpp>
 
-namespace client {
-    int start(config::Config& config);
+namespace tcpdb::client {
+    int start(const config::Config& config);
     std::string help_text();
 }  // namespace client
