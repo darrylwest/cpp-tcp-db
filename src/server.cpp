@@ -19,6 +19,19 @@ namespace tcpdb::server {
 
     quickkv::KVStore store;
 
+    void handle_client(sockpp::tcp_socket sock) {
+        char buf[512] = {0};
+        sockpp::result<size_t> res;
+
+        while ((res = sock.read(buf, sizeof(buf)) && res.value() > 0)) {
+            sock.write_n(buf, res.value());
+        }
+
+        sock.write(": ok\n", 4);
+        spdlog::info("sockpp close connection: {}", sock.peer_address().to_string());
+        sock.close();
+    }
+
     int start(const config::Config& config) {
 
         spdlog::info("Starting server: {}", config.to_string());
