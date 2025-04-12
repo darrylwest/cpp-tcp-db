@@ -55,7 +55,7 @@ CPMAddPackage(
 
 find_package(nlohmann_json 3.2.0 REQUIRED)
 find_package(Catch2 3 REQUIRED)
-find_package(SockPP REQUIRED)
+find_package(sockpp REQUIRED)
 
 # MacOS universal binary setup
 if(APPLE)
