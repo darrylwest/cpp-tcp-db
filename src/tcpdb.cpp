@@ -18,6 +18,5 @@ int main() {
 
     auto exit_code = tcpdb::server::start(config);
 
-
     return exit_code;
 }

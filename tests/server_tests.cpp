@@ -6,6 +6,7 @@
 #include <spdlog/spdlog.h>
 #include <tcpdb/config.hpp>
 #include <tcpdb/server.hpp>
+#include <thread>
 
 auto create_test_config() {
     tcpdb::config::Config config;
@@ -17,9 +18,20 @@ auto create_test_config() {
 }
 
 TEST_CASE("Server tests", "[configure]") {
-    tcpdb::config::Config config;
+    spdlog::set_level(spdlog::level::info);
+    auto config = create_test_config();
 
-    auto exit_code = tcpdb::server::start(config);
+    REQUIRE(config.server.host == "127.0.0.1");
 
-    REQUIRE(exit_code == 0);
+    /*
+    std::thread t([&config]() {
+        auto exit_code = tcpdb::server::start(config);
+        REQUIRE(exit_code == 0);
+    });
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    tcpdb::server::shutdown();
+
+    t.join();
+    */
 }

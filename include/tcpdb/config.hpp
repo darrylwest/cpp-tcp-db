@@ -10,7 +10,7 @@
 namespace tcpdb::config {
     struct Server {
         std::string host = "0.0.0.0";
-        int port = 14500;
+        in_port_t port = 14500;
         bool encrypted = false;
         std::string data = "data/server.db";
         std::string logs = "logs/server.log";

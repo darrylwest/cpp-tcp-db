@@ -15,7 +15,7 @@
 
 namespace tcpdb::server {
 
-    std::atomic_flag halt_threads;
+    std::atomic_flag halt_threads = ATOMIC_FLAG_INIT;
 
     quickkv::KVStore store;
 
@@ -28,7 +28,7 @@ namespace tcpdb::server {
         }
 
         sock.write(": ok\n", 4);
-        spdlog::info("sockpp close connection: {}", sock.peer_address().to_string());
+        spdlog::info("close socket connection: {}", sock.peer_address().to_string());
         sock.close();
     }
 
@@ -37,13 +37,40 @@ namespace tcpdb::server {
         spdlog::info("Starting server: {}", config.to_string());
         spdlog::info("sockpp version: {}", sockpp::SOCKPP_VERSION);
 
-        halt_threads.clear();
+        sockpp::initialize();
+
+        auto port = config.server.port;
+        std::error_code ec;
+        sockpp::tcp_acceptor acceptor(port, 4, ec);
+
+        if (ec) {
+            spdlog::error("Failed to start server: {}", ec.message());
+            return 1;
+        }
+
+        // halt_threads.clear();
+
+        while (!halt_threads.test()) {
+            sockpp::inet_address peer;
+
+            if (auto res = acceptor.accept(&peer); !res) {
+                spdlog::error("Failed to accept connection: {}", res.error().message());
+            } else {
+                spdlog::info("Accepted connection: {}", peer.to_string());
+                sockpp::tcp_socket sock = res.release();
+
+                std::thread t(handle_client, std::move(sock));
+                t.detach();
+            }
+        }
 
         return 0;
     }
 
     void shutdown() {
         // TODO save the database
+
+        spdlog::info("Shutting down server");
 
         halt_threads.test_and_set();
     }
