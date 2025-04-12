@@ -55,9 +55,19 @@ do
             shift
         ;;
         run)
-            ./build/$project
+            ./build/server
 
-            shift
+            exit 0
+        ;;
+        start)
+            ./build/server &
+
+            exit 0
+        ;;
+        client)
+            ./build/client
+
+            exit 0
         ;;
         format)
             clang-format -i include/tcpdb/*.hpp src/*.cpp tests/*.cpp
@@ -91,7 +101,9 @@ do
             echo ""
             echo "   init     : run the cmake command to create the build folder"
             echo "   build    : compile cryptor to the build folder"
-            echo "   run      : runs the web server app"
+            echo "   run      : runs the server app"
+            echo "   start    : starts the server app in the background"
+            echo "   client   : starts the client app REPL"
             echo "   format   : runs clang-format over includes and src"
             echo "   watch    : run watcher over source and include"
             echo "   pull     : pull the latest repo changes"

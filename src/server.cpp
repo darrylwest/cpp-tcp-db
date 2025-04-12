@@ -11,7 +11,7 @@
 
 int main() {
     const auto vers = tcpdb::Version();
-    spdlog::info("Hello and welcome to the tcp-db application, version: {}", vers.to_string());
+    spdlog::info("tcp-db server application, version: {}", vers.to_string());
 
     // create the k/v store (TODO move to server)
     quickkv::KVStore store;

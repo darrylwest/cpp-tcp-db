@@ -9,7 +9,7 @@
 
 int main() {
     const auto vers = tcpdb::Version();
-    spdlog::info("Hello and welcome to the tcp-db client application, version: {}", vers.to_string());
+    spdlog::info("tcp-db client application, version: {}", vers.to_string());
 
     return 0;
 }
