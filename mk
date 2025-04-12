@@ -60,7 +60,7 @@ do
             shift
         ;;
         format)
-            clang-format -i include/app/*.hpp src/*.cpp
+            clang-format -i include/tcpdb/*.hpp src/*.cpp tests/*.cpp
             git status -s
 
             shift

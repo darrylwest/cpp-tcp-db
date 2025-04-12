@@ -9,5 +9,4 @@
 namespace server {
     int start(config::Config& config);
     void shutdown();
-}
-
+}  // namespace server

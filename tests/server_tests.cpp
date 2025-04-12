@@ -3,7 +3,4 @@
 //
 #include <catch2/catch_all.hpp>
 
-
-TEST_CASE("Server tests", "[configure]") {
-    REQUIRE(true);
-}
+TEST_CASE("Server tests", "[configure]") { REQUIRE(true); }

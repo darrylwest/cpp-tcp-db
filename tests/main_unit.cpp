@@ -3,17 +3,17 @@
 //
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() function
 
+#include <spdlog/spdlog.h>
+
 #include <catch2/catch_all.hpp>
+#include <print>
 #include <tcpdb/version.hpp>
 #include <vendor/ansi_colors.hpp>
-#include <spdlog/spdlog.h>
-#include <print>
 #include <vendor/perftimer.hpp>
 
 perftimer::PerfTimer timer("Catch2 Unit Tests");
 
 struct MainTestSetup {
-
     MainTestSetup() {
         using namespace colors;
         spdlog::set_level(spdlog::level::critical);
@@ -39,8 +39,8 @@ MainTestSetup setup;
 TEST_CASE("Version tests", "[version]") {
     const auto vers = tcpdb::Version();
     REQUIRE(vers.major == 0);
-    REQUIRE(vers.minor == 2);
+    REQUIRE(vers.minor == 3);
     REQUIRE(vers.patch == 1);
     REQUIRE(vers.build >= 100);
-    REQUIRE(vers.to_string().starts_with("0.2."));
+    REQUIRE(vers.to_string().starts_with("0.3."));
 }

@@ -4,10 +4,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include <tcpdb/server.hpp>
-#include <tcpdb/version.hpp>
 #include <domainkeys/keys.hpp>
 #include <quickkv/quickkv.hpp>
+#include <tcpdb/server.hpp>
+#include <tcpdb/version.hpp>
 
 int main() {
     const auto vers = tcpdb::Version();

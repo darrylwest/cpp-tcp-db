@@ -20,7 +20,7 @@ namespace config {
     struct Client {
         size_t connect_timeout;
         std::string logs;
-        
+
         // to_string
     };
 
@@ -30,4 +30,4 @@ namespace config {
     };
 
     Config load_config();
-}
+}  // namespace config

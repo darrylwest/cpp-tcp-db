@@ -10,5 +10,4 @@
 namespace client {
     int start(config::Config& config);
     std::string help_text();
-}
-
+}  // namespace client

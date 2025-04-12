@@ -86,8 +86,8 @@ set(DEPENDENT_LIBRARIES
 )
 
 # Add executables
-add_executable(tcpdb 
-    ${SRC_DIR}/main.cpp
+add_executable(server
+    ${SRC_DIR}/server.cpp
 )
 
 add_executable(unit_tests 
@@ -122,7 +122,7 @@ function(setup_target_properties target)
 endfunction()
 
 # Use the function for each target
-foreach(target tcpdb unit_tests)
+foreach(target server unit_tests)
     setup_target_properties(${target})
 endforeach()
 

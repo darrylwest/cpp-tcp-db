@@ -3,15 +3,8 @@
 //
 #include <catch2/catch_all.hpp>
 
+TEST_CASE("Config tests", "[server]") { REQUIRE(true); }
 
-TEST_CASE("Config tests", "[server]") {
-    REQUIRE(true);
-}
+TEST_CASE("Config tests", "[client]") { REQUIRE(true); }
 
-TEST_CASE("Config tests", "[client]") {
-    REQUIRE(true);
-}
-
-TEST_CASE("Config tests", "[config]") {
-    REQUIRE(true);
-}
+TEST_CASE("Config tests", "[config]") { REQUIRE(true); }
