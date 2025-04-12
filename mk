@@ -55,17 +55,17 @@ do
             shift
         ;;
         run)
-            ./build/server
+            ./build/tcpdb-server
 
             exit 0
         ;;
         start)
-            ./build/server &
+            ./build/tcpdb-server &
 
             exit 0
         ;;
         client)
-            ./build/client
+            ./build/tcpdb-client
 
             exit 0
         ;;

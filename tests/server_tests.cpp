@@ -17,9 +17,9 @@ auto create_test_config() {
 }
 
 TEST_CASE("Server tests", "[configure]") {
-    // tcpdb::config::Config config;
+    tcpdb::config::Config config;
 
-    auto exit_code = 0; // tcpdb::server::start(config);
+    auto exit_code = tcpdb::server::start(config);
 
     REQUIRE(exit_code == 0);
 }
