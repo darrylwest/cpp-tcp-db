@@ -9,7 +9,7 @@
 
 auto create_test_config() {
     tcpdb::config::Config config;
-    config.server.host = "localhost";
+    config.server.host = "127.0.0.1";
     config.server.port = 9944;
     config.client.connect_timeout = 5000;
 

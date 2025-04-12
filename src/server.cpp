@@ -5,6 +5,8 @@
 #include <spdlog/spdlog.h>
 #include <atomic>
 #include <thread>
+#include <sockpp/tcp_acceptor.h>
+#include <sockpp/version.h>
 
 #include <domainkeys/keys.hpp>
 #include <quickkv/quickkv.hpp>
@@ -20,6 +22,7 @@ namespace tcpdb::server {
     int start(const config::Config& config) {
 
         spdlog::info("Starting server: {}", config.to_string());
+        spdlog::info("sockpp version: {}", sockpp::SOCKPP_VERSION);
 
         halt_threads.clear();
 
