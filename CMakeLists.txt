@@ -90,6 +90,10 @@ add_executable(server
     ${SRC_DIR}/server.cpp
 )
 
+add_executable(client
+    ${SRC_DIR}/client.cpp
+)
+
 add_executable(unit_tests 
     tests/main_unit.cpp 
     tests/config_tests.cpp
@@ -122,7 +126,7 @@ function(setup_target_properties target)
 endfunction()
 
 # Use the function for each target
-foreach(target server unit_tests)
+foreach(target server client unit_tests)
     setup_target_properties(${target})
 endforeach()
 
