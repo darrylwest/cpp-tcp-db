@@ -13,4 +13,8 @@ namespace tcpdb::base {
 
     // join the string array into a single comma delimited string
     std::string join(const std::vector<std::string>& strs);
-}
+
+    // return the long help string with all commands
+    std::string help_text();
+
+}  // namespace tcpdb::base

@@ -13,9 +13,9 @@
 #include <domainkeys/keys.hpp>
 #include <quickkv/quickkv.hpp>
 #include <string>
+#include <tcpdb/base.hpp>
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
-#include <tcpdb/base.hpp>
 #include <thread>
 
 namespace tcpdb::server {
@@ -31,8 +31,7 @@ namespace tcpdb::server {
         }
 
         if (request == "help") {
-            // TODO pull this text from helper.hpp
-            return Response("help me.");
+            return Response(base::help_text());
         }
 
         if (request.starts_with("ping")) {
@@ -52,6 +51,10 @@ namespace tcpdb::server {
             return Response("value");
         }
 
+        if (request.starts_with("remove ")) {
+            return Response("ok");
+        }
+
         // TODO now trap for database requests
         if (request.starts_with("dbsize")) {
             return Response(fmt::format("database size: {}", store.size()));
@@ -63,8 +66,6 @@ namespace tcpdb::server {
             }
             return Response(base::join(store.keys()));
         }
-
-
 
         // the session terminators...
         if (request.starts_with("quit")) {
@@ -117,7 +118,7 @@ namespace tcpdb::server {
             std::memset(buf, 0, res.value());
         }
 
-        sock.write("ok\n\r", 4);
+        sock.write_n("ok\n\r", 4);
         spdlog::info("close socket connection: {}", sock.peer_address().to_string());
         sock.close();
     }
@@ -160,6 +161,10 @@ namespace tcpdb::server {
                 t.detach();
             }
         }
+
+        // shutdown and close all the connections
+        acceptor.shutdown();
+        acceptor.close();
 
         return 0;
     }

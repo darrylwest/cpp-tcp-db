@@ -4,8 +4,8 @@
 #include <spdlog/spdlog.h>
 
 #include <catch2/catch_all.hpp>
-#include <tcpdb/config.hpp>
 #include <tcpdb/base.hpp>
+#include <tcpdb/config.hpp>
 #include <tcpdb/server.hpp>
 #include <thread>
 
