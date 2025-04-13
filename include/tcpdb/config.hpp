@@ -5,6 +5,7 @@
 #pragma once
 
 #include <spdlog/fmt/fmt.h>
+
 #include <string>
 #include <tcpdb/types.hpp>
 
@@ -22,11 +23,12 @@ namespace tcpdb::config {
     };
 
     struct Client {
+        std::string server_host = "10.0.1.237";
         size_t connect_timeout = 5000;
         std::string logs = "logs/client.log";
 
         [[nodiscard]] auto to_string() const -> std::string {
-            return fmt::format("timeout: {} logs: {}", connect_timeout, logs);
+            return fmt::format("host: {} timeout: {} logs: {}", server_host, connect_timeout, logs);
         }
     };
 
@@ -40,4 +42,4 @@ namespace tcpdb::config {
     };
 
     Config load_config();
-}  // namespace config
+}  // namespace tcpdb::config

@@ -2,8 +2,9 @@
 // dpw
 //
 
-#include <unistd.h>
 #include <spdlog/spdlog.h>
+#include <unistd.h>
+
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
 

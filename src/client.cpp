@@ -6,8 +6,8 @@
 
 #include <tcpdb/client.hpp>
 #include <tcpdb/config.hpp>
-#include <tcpdb/version.hpp>
 #include <tcpdb/types.hpp>
+#include <tcpdb/version.hpp>
 
 namespace tcpdb::client {
     int start(const tcpdb::config::Config& config) {
@@ -16,7 +16,5 @@ namespace tcpdb::client {
         return 0;
     }
 
-    std::string help_text() {
-        return "my help text";
-    }
-}
+    std::string help_text() { return "my help text"; }
+}  // namespace tcpdb::client

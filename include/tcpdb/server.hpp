@@ -10,4 +10,4 @@ namespace tcpdb::server {
 
     int start(const config::Config& config);
     void shutdown();
-}  // namespace server
+}  // namespace tcpdb::server

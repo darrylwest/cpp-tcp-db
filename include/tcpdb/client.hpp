@@ -10,4 +10,4 @@
 namespace tcpdb::client {
     int start(const config::Config& config);
     std::string help_text();
-}  // namespace client
+}  // namespace tcpdb::client
