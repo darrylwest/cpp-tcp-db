@@ -7,6 +7,8 @@
 #include <spdlog/fmt/fmt.h>
 #include <string>
 
+using in_port_t = uint16_t;
+
 namespace tcpdb::config {
     struct Server {
         std::string host = "0.0.0.0";
