@@ -16,6 +16,7 @@ namespace tcpdb::config {
         bool encrypted = false;
         std::string data = "data/server.db";
         std::string logs = "logs/server.log";
+        int timeout_seconds = 5;
 
         [[nodiscard]] auto to_string() const -> std::string {
             return fmt::format("host: {} port: {}", host, port);

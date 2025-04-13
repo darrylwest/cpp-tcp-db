@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <atomic>
+#include <chrono>
 #include <domainkeys/keys.hpp>
 #include <quickkv/quickkv.hpp>
 #include <string>
@@ -26,6 +27,30 @@ namespace tcpdb::server {
         std::erase_if(str, [](char c) { return c == '\n' || c == '\r'; });
     }
 
+    Response handle_request(const std::string& request) {
+        if (request.starts_with("version")) {
+            return Response(tcpdb::Version().to_string());
+        }
+
+        if (request == "help") {
+            return Response("help me.");
+        }
+
+        if (request.starts_with("quit")) {
+            spdlog::info("quit requested, closing connections");
+            return Response("quit session", 0, false, true);
+        }
+
+        if (request.starts_with("shutdown")) {
+            spdlog::info("shutdown requested, closing connections");
+            return Response("shutdown requested", 0, true, false);
+        }
+
+        // echo back with error set
+        auto text = "Unknown request: " + request;
+        return Response(text, 401);
+    }
+
     void handle_client(sockpp::tcp_socket sock) {
         spdlog::info("handle client: {}", sock.peer_address().to_string());
 
@@ -38,17 +63,23 @@ namespace tcpdb::server {
 
             spdlog::info("value: {}, buf: {}", res.value(), request);
 
-            if (request.starts_with("version")) {
-                auto vers = tcpdb::Version().to_string() + "\n\r";
-                sock.write_n(vers.c_str(), vers.size());
-            } else if (request == "help") {
-                auto msg = std::string("this is the help text.\n\r");
-                sock.write_n(msg.c_str(), msg.size());
-            } else if (request.starts_with("quit")) {
-                spdlog::info("quit requested, closing connections");
+            auto response = handle_request(request);
+
+            // add the line terminator
+            auto data = response.text + "\n\r";
+
+            // write the complete response
+            sock.write_n(data.data(), data.size());
+
+            if (response.quit) {
+                spdlog::info("quit requested, closing connection");
                 break;
-            } else {
-                sock.write_n(buf, res.value());
+            }
+
+            if (response.shutdown) {
+                spdlog::info("shutdown requested, closing connections, stopping server");
+                halt_threads.test_and_set();
+                break;
             }
 
             // clear the used section of buffer
@@ -75,13 +106,21 @@ namespace tcpdb::server {
             return 1;
         }
 
-        // halt_threads.clear();
+        // struct timeval timeout {config.server.timeout_seconds, 0};
+        // spdlog::info("timeout set to {} seconds", config.server.timeout_seconds);
+
+        // acceptor.set_non_blocking(true);
 
         while (!halt_threads.test()) {
             sockpp::inet_address peer;
 
             if (auto res = acceptor.accept(&peer); !res) {
-                spdlog::error("Failed to accept connection: {}", res.error().message());
+                if (res.error().value() != 35) {
+                    spdlog::error("Failed to accept connection: {}", res.error().message());
+                    spdlog::error("error code: {}", res.error().value());
+                    break;
+                }
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
             } else {
                 spdlog::info("Accepted connection: {}", peer.to_string());
                 sockpp::tcp_socket sock = res.release();

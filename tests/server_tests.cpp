@@ -12,6 +12,7 @@ auto create_test_config() {
     tcpdb::config::Config config;
     config.server.host = "127.0.0.1";
     config.server.port = 9944;
+    config.client.server_host = "127.0.0.1";
     config.client.connect_timeout = 5000;
 
     return config;
@@ -22,8 +23,10 @@ TEST_CASE("Server tests", "[configure]") {
     auto config = create_test_config();
 
     REQUIRE(config.server.host == "127.0.0.1");
+    REQUIRE(config.server.port == 9944);
 
     /*
+     * TODO implement this with threads t1 to run the server, t2 for client
     std::thread t([&config]() {
         auto exit_code = tcpdb::server::start(config);
         REQUIRE(exit_code == 0);
