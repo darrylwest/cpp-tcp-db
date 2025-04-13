@@ -29,8 +29,16 @@ namespace tcpdb::server {
             : text(std::move(txt)), error_code(code), shutdown(shutdown_flag), quit(quit_flag) {}
     };
 
+    // start the server using settings in config
     int start(const config::Config& config);
+
+    // shutdown the server
     void shutdown();
+
+    // handle a socket client
     void handle_client(sockpp::tcp_socket sock);
+
+    // handle a client request
     Response handle_request(const std::string& request);
+
 }  // namespace tcpdb::server

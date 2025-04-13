@@ -5,6 +5,7 @@
 
 #include <catch2/catch_all.hpp>
 #include <tcpdb/config.hpp>
+#include <tcpdb/utils.hpp>
 #include <tcpdb/server.hpp>
 #include <thread>
 

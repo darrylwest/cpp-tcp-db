@@ -15,6 +15,7 @@
 #include <string>
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
+#include <tcpdb/utils.hpp>
 #include <thread>
 
 namespace tcpdb::server {
@@ -22,22 +23,6 @@ namespace tcpdb::server {
     std::atomic_flag halt_threads = ATOMIC_FLAG_INIT;
 
     quickkv::KVStore store;
-
-    // TODO move to helpers.hpp
-    void remove_newlines(std::string& str) {
-        std::erase_if(str, [](char c) { return c == '\n' || c == '\r'; });
-    }
-
-    std::string join(const std::vector<std::string>& strs) {
-        std::ostringstream oss;
-
-        for (size_t i = 0; i < strs.size(); ++i) {
-            if (i > 0) oss << ",";
-            oss << strs[i];
-        }
-
-        return oss.str();
-    }
 
     // handle the client request
     Response handle_request(const std::string& request) {
@@ -76,7 +61,7 @@ namespace tcpdb::server {
             if (store.size() == 0) {
                 return Response("database is empty.");
             }
-            return Response(join(store.keys()));
+            return Response(utils::join(store.keys()));
         }
 
 
@@ -105,7 +90,7 @@ namespace tcpdb::server {
 
         while ((res = sock.read(buf, sizeof(buf))) && res.value() > 0) {
             auto request = std::string(buf, res.value());
-            remove_newlines(request);
+            utils::remove_newlines(request);
 
             spdlog::info("value: {}, buf: {}", res.value(), request);
 
