@@ -6,8 +6,7 @@
 
 #include <spdlog/fmt/fmt.h>
 #include <string>
-
-using in_port_t = uint16_t;
+#include <tcpdb/types.hpp>
 
 namespace tcpdb::config {
     struct Server {

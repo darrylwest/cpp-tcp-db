@@ -7,6 +7,7 @@
 #include <tcpdb/client.hpp>
 #include <tcpdb/config.hpp>
 #include <tcpdb/version.hpp>
+#include <tcpdb/types.hpp>
 
 namespace tcpdb::client {
     int start(const tcpdb::config::Config& config) {

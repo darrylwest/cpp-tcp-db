@@ -12,8 +12,8 @@
 #include <quickkv/quickkv.hpp>
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
+#include <tcpdb/types.hpp>
 
-using in_port_t = uint16_t;
 
 namespace tcpdb::server {
 
