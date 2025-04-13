@@ -59,6 +59,14 @@ namespace tcpdb::server {
             return Response("all a-ok here.");
         }
 
+        if (request.starts_with("set ")) {
+            return Response("set key value");
+        }
+
+        if (request.starts_with("get ")) {
+            return Response("value");
+        }
+
         // TODO now trap for database requests
         if (request.starts_with("dbsize")) {
             return Response(fmt::format("database size: {}", store.size()));
@@ -70,6 +78,8 @@ namespace tcpdb::server {
             }
             return Response(join(store.keys()));
         }
+
+
 
         // the session terminators...
         if (request.starts_with("quit")) {
