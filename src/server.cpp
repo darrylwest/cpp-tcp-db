@@ -15,7 +15,7 @@
 #include <string>
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
-#include <tcpdb/utils.hpp>
+#include <tcpdb/base.hpp>
 #include <thread>
 
 namespace tcpdb::server {
@@ -61,7 +61,7 @@ namespace tcpdb::server {
             if (store.size() == 0) {
                 return Response("database is empty.");
             }
-            return Response(utils::join(store.keys()));
+            return Response(base::join(store.keys()));
         }
 
 
@@ -90,7 +90,7 @@ namespace tcpdb::server {
 
         while ((res = sock.read(buf, sizeof(buf))) && res.value() > 0) {
             auto request = std::string(buf, res.value());
-            utils::remove_newlines(request);
+            base::remove_newlines(request);
 
             spdlog::info("value: {}, buf: {}", res.value(), request);
 

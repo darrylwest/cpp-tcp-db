@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace tcpdb::utils {
+namespace tcpdb::base {
     // remove all tne newline character returns
     void remove_newlines(std::string& str);
 
