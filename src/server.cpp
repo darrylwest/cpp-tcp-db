@@ -13,6 +13,8 @@
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
 
+using in_port_t = uint16_t;
+
 namespace tcpdb::server {
 
     std::atomic_flag halt_threads = ATOMIC_FLAG_INIT;
