@@ -4,6 +4,7 @@
 
 #include <sockpp/tcp_acceptor.h>
 #include <sockpp/version.h>
+#include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
 
 #include <algorithm>
@@ -33,7 +34,22 @@ namespace tcpdb::server {
         }
 
         if (request == "help") {
+            // TODO pull this text from helper.hpp
             return Response("help me.");
+        }
+
+        if (request.starts_with("ping")) {
+            return Response("pong");
+        }
+
+        if (request.starts_with("status")) {
+            // TODO send the current timestamp, uptime, active connections, db size
+            return Response("all a-ok here.");
+        }
+
+        // TODO now trap for database requests
+        if (request.starts_with("size")) {
+            return Response(fmt::format("database size: {}", store.size()));
         }
 
         if (request.starts_with("quit")) {
@@ -47,7 +63,7 @@ namespace tcpdb::server {
         }
 
         // echo back with error set
-        auto text = "Unknown request: " + request;
+        auto text = fmt::format("Unknown request: {}", request);
         return Response(text, 401);
     }
 
