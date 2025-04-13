@@ -28,6 +28,18 @@ namespace tcpdb::server {
         std::erase_if(str, [](char c) { return c == '\n' || c == '\r'; });
     }
 
+    std::string join(const std::vector<std::string>& strs) {
+        std::ostringstream oss;
+
+        for (size_t i = 0; i < strs.size(); ++i) {
+            if (i > 0) oss << ",";
+            oss << strs[i];
+        }
+
+        return oss.str();
+    }
+
+    // handle the client request
     Response handle_request(const std::string& request) {
         if (request.starts_with("version")) {
             return Response(tcpdb::Version().to_string());
@@ -48,10 +60,18 @@ namespace tcpdb::server {
         }
 
         // TODO now trap for database requests
-        if (request.starts_with("size")) {
+        if (request.starts_with("dbsize")) {
             return Response(fmt::format("database size: {}", store.size()));
         }
 
+        if (request.starts_with("keys")) {
+            if (store.size() == 0) {
+                return Response("database is empty.");
+            }
+            return Response(join(store.keys()));
+        }
+
+        // the session terminators...
         if (request.starts_with("quit")) {
             spdlog::info("quit requested, closing connections");
             return Response("quit session", 0, false, true);
