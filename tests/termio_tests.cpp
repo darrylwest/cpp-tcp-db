@@ -12,7 +12,8 @@
 TEST_CASE("Termio tests", "[colors]") {
     using namespace tcpdb::termio;
 
-    // std::string text = fmt::format("{}This is a {}blue blob{} of text.{}\n", Attr::bold, Color::blue, Color::reset, Color::reset);
+    // std::string text = fmt::format("{}This is a {}blue blob{} of text.{}\n", Attr::bold, Color::blue,
+    // Color::reset, Color::reset);
 
     REQUIRE(true);
 }

@@ -35,4 +35,3 @@ TEST_CASE("Base tests", "[help text]") {
     REQUIRE(text.size() > 600);
     REQUIRE(text.size() < 1000);
 }
-

@@ -5,8 +5,8 @@
 #include <sstream>
 #include <string>
 #include <tcpdb/base.hpp>
-#include <tcpdb/version.hpp>
 #include <tcpdb/termio.hpp>
+#include <tcpdb/version.hpp>
 #include <thread>
 #include <vector>
 

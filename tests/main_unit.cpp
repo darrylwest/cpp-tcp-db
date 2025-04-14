@@ -7,8 +7,8 @@
 
 #include <catch2/catch_all.hpp>
 #include <print>
-#include <tcpdb/version.hpp>
 #include <tcpdb/termio.hpp>
+#include <tcpdb/version.hpp>
 #include <vendor/perftimer.hpp>
 
 perftimer::PerfTimer timer("Catch2 Unit Tests");

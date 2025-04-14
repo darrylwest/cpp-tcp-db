@@ -83,9 +83,9 @@ namespace tcpdb::termio {
                 if (arg_index < args.size()) {
                     result += args[arg_index];
                     arg_index++;
-                    i += 2; // Skip both '{' and '}'
+                    i += 2;  // Skip both '{' and '}'
                 } else {
-                    result += "{}"; // Keep placeholder
+                    result += "{}";  // Keep placeholder
                     i += 2;
                 }
             } else {
@@ -103,18 +103,10 @@ namespace tcpdb::termio {
         return ss.str();
     }
 
-    const std::string bold() {
-        return to_string(Attr::bold);
-    }
+    const std::string bold() { return to_string(Attr::bold); }
 
-    const std::string cyan() {
-        return to_string(Color::cyan);
-    }
-    const std::string reset() {
-        return to_string(Color::reset);
-    }
-    const std::string reset_nl() {
-        return to_string(Color::reset) + "\n";
-    }
+    const std::string cyan() { return to_string(Color::cyan); }
+    const std::string reset() { return to_string(Color::reset); }
+    const std::string reset_nl() { return to_string(Color::reset) + "\n"; }
 
 }  // namespace tcpdb::termio
