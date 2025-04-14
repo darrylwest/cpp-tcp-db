@@ -27,7 +27,8 @@ struct MainTestSetup {
 
         using namespace tcpdb::termio;
 
-        std::println("{}{}Tests complete...{}", bold(), cyan(), reset());
+        auto vers = tcpdb::Version().to_string();
+        std::println("{}{}Tests complete, Version: {}{}...{}", bold(), cyan(), yellow(), vers, reset());
         timer.show_duration();
         // std::println("{}", timer.log.str());
     }
