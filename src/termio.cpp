@@ -96,10 +96,10 @@ namespace tcpdb::termio {
         return result;
     }
 
-    const std::string wrap(const std::string& s, const Color c) {
+    auto wrap(const std::string& s, const Color& c, const Attr& a) {
         std::stringstream ss;
 
-        ss << c << s << Color::reset;
+        ss << a << c << s << Color::reset;
         return ss.str();
     }
 

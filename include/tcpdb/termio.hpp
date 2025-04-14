@@ -52,7 +52,7 @@ namespace tcpdb::termio {
     // Attr Overload << for easier use
     std::ostream& operator<<(std::ostream& os, Attr a);
 
-    const std::string wrap(const std::string& s, const Color c);
+    auto wrap(const std::string& s, const Color& c, const Attr& a = Attr::normal);
     const std::string bold();
 
     const std::string cyan();
