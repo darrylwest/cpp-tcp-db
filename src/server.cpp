@@ -44,15 +44,46 @@ namespace tcpdb::server {
         }
 
         if (request.starts_with("set ")) {
-            return Response("set key value");
+            if (auto cmd = base::parse_command(request)) {
+                auto key = cmd->key.value();
+                auto value = cmd->value.value();
+
+                if (store.set(key, value)) {
+                    return Response("ok");
+                }
+
+                return Response("could not set value for key: " + key, 402);
+            }
+
+            return Response("bad request", 402);
         }
 
         if (request.starts_with("get ")) {
-            return Response("value");
+            if (auto cmd = base::parse_command(request)) {
+                auto key = cmd->key.value();
+
+                if (auto value = store.get(key)) {
+                    return Response(value.value());
+                }
+
+                return Response("could not get value for key: " + key, 404);
+            }
+
+            return Response("bad request", 402);
         }
 
         if (request.starts_with("remove ")) {
-            return Response("ok");
+            if (auto cmd = base::parse_command(request)) {
+                auto key = cmd->key.value();
+
+                if (store.remove(key)) {
+                    return Response("ok");
+                }
+
+                return Response("could remove value; not-found key: " + key, 404);
+            }
+
+            return Response("bad request", 402);
         }
 
         // TODO now trap for database requests
@@ -175,6 +206,8 @@ namespace tcpdb::server {
         spdlog::info("Shutting down server");
 
         halt_threads.test_and_set();
+
+        // TODO now ping the port to trigger the shutdown
     }
 
 }  // namespace tcpdb::server

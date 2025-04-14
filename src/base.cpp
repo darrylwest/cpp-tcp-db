@@ -19,10 +19,17 @@ namespace tcpdb::base {
         Command cmd;
         if (!(iss >> cmd.name)) return std::nullopt;
 
-        if (cmd.name == "get" || cmd.name == "delete") {
+        if (cmd.name == "get" || cmd.name == "remove") {
             if (!(iss >> cmd.key.emplace())) return std::nullopt;
         } else if (cmd.name == "set") {
-            if (!(iss >> cmd.key.emplace() >> cmd.value.emplace())) return std::nullopt;
+            std::string key;
+            if (!(iss >> key)) return std::nullopt;
+            cmd.key = key;
+
+            // Read the rest of the line as the value (may contain spaces)
+            std::string value;
+            std::getline(iss >> std::ws, value); // consume leading whitespace before getline
+            cmd.value = value;
         } else {
             return std::nullopt;  // unknown command
         }
