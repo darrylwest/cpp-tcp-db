@@ -40,8 +40,8 @@ namespace tcpdb::termio {
         // bright = 60  // Not a standard attribute, but a logical addition.
     };
 
-    // Convert color to ANSI code
-    std::string to_string(Color c);
+    // Convert color to ANSI code; set bright to true; default is false
+    std::string to_string(Color c, bool bright = false);
 
     // convert the attribute to a ANSI code string
     std::string to_string(Attr a);

@@ -41,7 +41,7 @@ TEST_CASE("Termio tests", "[wrap][default-attr]") {
     spdlog::set_level(spdlog::level::critical);
 }
 
-TEST_CASE("Termio tests", "[colors]") {
+TEST_CASE("Termio tests", "[attrs][bold]") {
     using namespace tcpdb::termio;
     std::ostringstream oss;
 
@@ -51,4 +51,19 @@ TEST_CASE("Termio tests", "[colors]") {
     REQUIRE(text.starts_with(to_string(Attr::bold)));
     REQUIRE(text.contains("some text"));
     REQUIRE(text.ends_with(to_string(Color::reset) + "\n"));
+}
+
+TEST_CASE("Termio tests", "[colors][bright]") {
+    spdlog::set_level(spdlog::level::info);
+    using namespace tcpdb::termio;
+
+    const auto bright_blue = to_string(Color::blue, true);
+    spdlog::info("{}bright blue{}", bright_blue, reset());
+
+    const auto blue = to_string(Color::blue);
+
+    spdlog::info("{}normal blue{}", blue, reset());
+    REQUIRE(true);
+
+    spdlog::set_level(spdlog::level::info);
 }

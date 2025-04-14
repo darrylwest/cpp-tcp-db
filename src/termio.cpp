@@ -12,24 +12,24 @@
 namespace tcpdb::termio {
 
     // Convert color to ANSI code
-    std::string to_string(Color c) {
+    std::string to_string(Color c, bool bright) {
         switch (c) {
             case Color::black:
-                return "\033[30m";
+                return bright ? "\033[30m" : "\033[1;31m";
             case Color::red:
-                return "\033[31m";
+                return bright ? "\033[31m" : "\033[1;31m";
             case Color::green:
-                return "\033[32m";
+                return bright ? "\033[32m" : "\033[1;32m";
             case Color::yellow:
-                return "\033[33m";
+                return bright ? "\033[33m" : "\033[1;33m";
             case Color::blue:
-                return "\033[34m";
+                return bright ? "\033[34m" : "\033[1;34m";
             case Color::magenta:
-                return "\033[35m";
+                return bright ? "\033[35m" : "\033[1;35m";
             case Color::cyan:
-                return "\033[36m";
+                return bright ? "\033[36m" : "\033[1;36m";
             case Color::white:
-                return "\033[37m";
+                return bright ? "\033[37m" : "\033[1;37m";
             case Color::reset:
                 return "\033[0m";
             default:
