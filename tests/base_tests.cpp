@@ -36,10 +36,3 @@ TEST_CASE("Base tests", "[help text]") {
     REQUIRE(text.size() < 1000);
 }
 
-TEST_CASE("Base tests", "[screen]") {
-    using namespace tcpdb::base::screen;
-
-    auto line = fmt::format("{}this is a test{}", green, reset_nl);
-
-    REQUIRE(line.contains("this is a test"));
-}

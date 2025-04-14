@@ -6,6 +6,7 @@
 #include <string>
 #include <tcpdb/base.hpp>
 #include <tcpdb/version.hpp>
+#include <tcpdb/termio.hpp>
 #include <thread>
 #include <vector>
 
@@ -29,7 +30,11 @@ namespace tcpdb::base {
     }
 
     std::string help_text() {
-        using namespace tcpdb::base::screen;
+        auto green = termio::to_string(termio::Color::green);
+        auto reset = to_string(termio::Color::reset);
+        auto cyan = termio::to_string(termio::Color::cyan);
+        auto yellow = termio::to_string(termio::Color::yellow);
+
         std::ostringstream oss;
         auto version = tcpdb::Version();
 
