@@ -37,7 +37,7 @@ namespace tcpdb::termio {
         reverse = 7,
         hidden = 8,
         strikethrough = 9,
-        bright = 60  // Not a standard attribute, but a logical addition.
+        // bright = 60  // Not a standard attribute, but a logical addition.
     };
 
     // Convert color to ANSI code
@@ -52,10 +52,20 @@ namespace tcpdb::termio {
     // Attr Overload << for easier use
     std::ostream& operator<<(std::ostream& os, Attr a);
 
-    auto wrap(const std::string& s, const Color& c, const Attr& a = Attr::normal);
+    const std::string wrap(const std::string& s, const Color& c, const Attr& a = Attr::normal);
+    const std::string normal();
     const std::string bold();
+    const std::string italic();
+    const std::string underline();
 
+    const std::string black();
+    const std::string red();
+    const std::string green();
+    const std::string yellow();
+    const std::string blue();
+    const std::string magenta();
     const std::string cyan();
+    const std::string white();
     const std::string reset();
     const std::string reset_nl();
 

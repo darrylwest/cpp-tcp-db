@@ -59,8 +59,8 @@ namespace tcpdb::termio {
                 return "\033[8m";
             case Attr::strikethrough:
                 return "\033[9m";
-            case Attr::bright:
-                return ";1";  // Used in conjunction with color.
+            // case Attr::bright:
+            // return ";1";  // Used in conjunction with color.
             default:
                 return "\033[0m";
         }
@@ -96,16 +96,25 @@ namespace tcpdb::termio {
         return result;
     }
 
-    auto wrap(const std::string& s, const Color& c, const Attr& a) {
+    const std::string wrap(const std::string& s, const Color& c, const Attr& a) {
         std::stringstream ss;
 
         ss << a << c << s << Color::reset;
         return ss.str();
     }
 
+    const std::string normal() { return to_string(Attr::normal); }
     const std::string bold() { return to_string(Attr::bold); }
+    const std::string italic() { return to_string(Attr::italic); }
+    const std::string underline() { return to_string(Attr::underline); }
 
+    const std::string black() { return to_string(Color::black); }
+    const std::string red() { return to_string(Color::red); }
+    const std::string green() { return to_string(Color::green); }
+    const std::string yellow() { return to_string(Color::yellow); }
+    const std::string blue() { return to_string(Color::blue); }
     const std::string cyan() { return to_string(Color::cyan); }
+    const std::string white() { return to_string(Color::white); }
     const std::string reset() { return to_string(Color::reset); }
     const std::string reset_nl() { return to_string(Color::reset) + "\n"; }
 
