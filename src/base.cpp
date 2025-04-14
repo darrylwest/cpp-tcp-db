@@ -70,6 +70,8 @@ namespace tcpdb::base {
         oss << "  remove key    : removes the value from the database using the key\n";
         oss << "  keys          : returns all the database keys\n";
         oss << "  dbsize        : returns the number of keys in the database\n";
+        oss << "  txkey         : create and return a new timestamp key\n";
+        oss << "  rtkey         : create and return a new route key\n";
         oss << "  version       : returns the current version\n";
         oss << "  ping          : pong\n";
         oss << "  status        : returns the server status, uptime, db size, etc.\n";

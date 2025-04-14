@@ -66,7 +66,7 @@ namespace tcpdb::server {
                     return Response(value.value());
                 }
 
-                return Response("could not get value for key: " + key, 404);
+                return Response("value not found for key: " + key, 404);
             }
 
             return Response("bad request", 402);
@@ -84,6 +84,14 @@ namespace tcpdb::server {
             }
 
             return Response("bad request", 402);
+        }
+
+        if (request.starts_with("txkey")) {
+            return Response(domainkeys::keys::create_timestamp_key().to_string());
+        }
+
+        if (request.starts_with("rtkey")) {
+            return Response(domainkeys::keys::create_route_key().to_string());
         }
 
         // TODO now trap for database requests

@@ -4,6 +4,7 @@
 #include <spdlog/spdlog.h>
 
 #include <catch2/catch_all.hpp>
+#include <domainkeys/keys.hpp>
 #include <tcpdb/base.hpp>
 #include <tcpdb/config.hpp>
 #include <tcpdb/server.hpp>
@@ -45,4 +46,59 @@ TEST_CASE("Server tests", "[api-request][help]") {
     REQUIRE(resp.error_code == 0);
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);
+}
+
+TEST_CASE("Server test", "[api-request][get,set,remove]") {
+    auto resp = tcpdb::server::handle_request("get flarb-not-found");
+    INFO("response text: " + resp.text);
+    REQUIRE(resp.text.contains("not found"));
+    REQUIRE(resp.error_code >= 400);
+    REQUIRE(resp.error_code < 500);
+
+    auto key = domainkeys::keys::create_route_key().to_string();
+    auto value = "this is a test value";
+    std::ostringstream oss;
+
+    oss << "set " << key << " " << value << '\n';
+
+    resp = tcpdb::server::handle_request(oss.str());
+    REQUIRE(resp.text.contains("ok"));
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+
+    oss.str("");
+    oss.clear();
+
+    oss << "get " << key << '\n';
+    INFO(oss.str());
+    resp = tcpdb::server::handle_request(oss.str());
+    REQUIRE(resp.text == value);
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+
+    // remove the value
+    oss.str("");
+    oss.clear();
+
+    oss << "remove " << key << '\n';
+    INFO(oss.str());
+    resp = tcpdb::server::handle_request(oss.str());
+    REQUIRE(resp.text == "ok");
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+
+    // ensure it's gone
+    oss.str("");
+    oss.clear();
+
+    oss << "get " << key << '\n';
+    INFO(oss.str());
+    resp = tcpdb::server::handle_request(oss.str());
+    INFO("response text: " + resp.text);
+    REQUIRE(resp.text.contains("not found"));
+    REQUIRE(resp.error_code >= 400);
+    REQUIRE(resp.error_code < 500);
 }
