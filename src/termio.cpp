@@ -2,12 +2,10 @@
 // 2025-04-14 14:25:31 dpw
 //
 
-#include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <tcpdb/termio.hpp>
-#include <vector>
 
 namespace tcpdb::termio {
 
@@ -71,30 +69,6 @@ namespace tcpdb::termio {
 
     // Attr Overload << for easier use
     std::ostream& operator<<(std::ostream& os, Attr a) { return os << to_string(a); }
-
-    // fmt function (similar to std::format)
-    std::string fmt(const std::string& format_str, const std::vector<std::string>& args) {
-        std::string result;
-        size_t arg_index = 0;
-        size_t i = 0;
-
-        while (i < format_str.length()) {
-            if (format_str[i] == '{' && i + 1 < format_str.length() && format_str[i + 1] == '}') {
-                if (arg_index < args.size()) {
-                    result += args[arg_index];
-                    arg_index++;
-                    i += 2;  // Skip both '{' and '}'
-                } else {
-                    result += "{}";  // Keep placeholder
-                    i += 2;
-                }
-            } else {
-                result += format_str[i];
-                i++;
-            }
-        }
-        return result;
-    }
 
     const std::string wrap(const std::string& s, const Color& c, const Attr& a) {
         std::stringstream ss;

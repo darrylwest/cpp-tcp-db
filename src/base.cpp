@@ -2,6 +2,7 @@
 // 2024-12-09 10:28:16 dpw
 //
 
+#include <optional>
 #include <sstream>
 #include <string>
 #include <tcpdb/base.hpp>
@@ -11,6 +12,23 @@
 #include <vector>
 
 namespace tcpdb::base {
+
+    // parse the command
+    std::optional<Command> parse_command(const std::string& input) {
+        std::istringstream iss(input);
+        Command cmd;
+        if (!(iss >> cmd.name)) return std::nullopt;
+
+        if (cmd.name == "get" || cmd.name == "delete") {
+            if (!(iss >> cmd.key.emplace())) return std::nullopt;
+        } else if (cmd.name == "set") {
+            if (!(iss >> cmd.key.emplace() >> cmd.value.emplace())) return std::nullopt;
+        } else {
+            return std::nullopt;  // unknown command
+        }
+
+        return cmd;
+    }
 
     // remove all tne newline character returns
     void remove_newlines(std::string& str) {

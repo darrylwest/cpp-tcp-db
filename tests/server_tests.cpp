@@ -28,8 +28,6 @@ TEST_CASE("Server tests", "[configure]") {
 }
 
 TEST_CASE("Server tests", "[api-request][version]") {
-    spdlog::set_level(spdlog::level::info);
-
     auto resp = tcpdb::server::handle_request("version");
     auto version = tcpdb::Version().to_string();
 
@@ -40,8 +38,6 @@ TEST_CASE("Server tests", "[api-request][version]") {
 }
 
 TEST_CASE("Server tests", "[api-request][help]") {
-    spdlog::set_level(spdlog::level::info);
-
     auto resp = tcpdb::server::handle_request("help");
     auto help_text = tcpdb::base::help_text();
 

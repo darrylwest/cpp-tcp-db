@@ -9,6 +9,26 @@
 #include <tcpdb/base.hpp>
 #include <vector>
 
+TEST_CASE("Base tests", "[parse_command][name,key,value]") {
+    using namespace tcpdb::base;
+
+    auto cmd = parse_command("set foo bar");
+    REQUIRE(cmd.has_value());
+    REQUIRE(cmd->name == "set");
+    REQUIRE(cmd->key == "foo");
+    REQUIRE(cmd->value == "bar");
+}
+
+TEST_CASE("Base tests", "[parse_command][name,key]") {
+    using namespace tcpdb::base;
+
+    auto cmd = parse_command("get foo");
+    REQUIRE(cmd.has_value());
+    REQUIRE(cmd->name == "get");
+    REQUIRE(cmd->key == "foo");
+    REQUIRE(cmd->value.has_value() == false);
+}
+
 TEST_CASE("Base tests", "[remove_newline]") {
     std::string text = "this is a test\r\n";
     tcpdb::base::remove_newlines(text);
