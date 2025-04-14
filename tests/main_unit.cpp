@@ -8,6 +8,7 @@
 #include <catch2/catch_all.hpp>
 #include <print>
 #include <tcpdb/version.hpp>
+#include <tcpdb/termio.hpp>
 #include <vendor/perftimer.hpp>
 
 perftimer::PerfTimer timer("Catch2 Unit Tests");
@@ -22,10 +23,11 @@ struct MainTestSetup {
     }
 
     ~MainTestSetup() {
-        // using namespace colors;
         timer.stop();
-        // std::println("{}Tests complete...{}", bright::cyan, colors::reset);
-        std::puts("Tests complete...");
+
+        using namespace tcpdb::termio;
+
+        std::println("{}{}Tests complete...{}", bold(), cyan(), reset());
         timer.show_duration();
         // std::println("{}", timer.log.str());
     }
