@@ -13,7 +13,7 @@ namespace tcpdb::base {
     namespace screen {
         // constexpr auto red = "\033[0;31m";
         constexpr auto green = "\033[0;32m";
-        // constexpr auto yellow = "\033[0;33m";
+        constexpr auto yellow = "\033[0;33m";
         // constexpr auto blue = "\033[0;34m";
         // constexpr auto magenta = "\033[0;35m";
         constexpr auto cyan = "\033[0;36m";
@@ -45,7 +45,7 @@ namespace tcpdb::base {
         auto version = tcpdb::Version();
 
         oss << green << "tcp-db, version: " << version << reset_nl;
-        oss << cyan << "Command List\n";
+        oss << cyan << "Command List\n" << yellow;
         oss << "  get key       : returns the value from the key, or not found\n";
         oss << "  set key value : writes the value to the database using the key\n";
         oss << "  remove key    : removes the value from the database using the key\n";
