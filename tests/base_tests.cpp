@@ -1,6 +1,7 @@
 //
 // 2025-04-11 20:26:27 dpw
 //
+#include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
 
 #include <catch2/catch_all.hpp>
@@ -36,8 +37,9 @@ TEST_CASE("Base tests", "[help text]") {
 }
 
 TEST_CASE("Base tests", "[screen]") {
+    using namespace tcpdb::base::screen;
 
-    // auto line = colors::green + "This is a test\n" + colors::reset;
+    auto line = fmt::format("{}this is a test{}", green, reset_nl);
 
-    REQUIRE(true);
+    REQUIRE(line.contains("this is a test"));
 }

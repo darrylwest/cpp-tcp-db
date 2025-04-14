@@ -47,7 +47,6 @@ namespace tcpdb::base {
         oss << "  shutdown      : kills the server\n";
         oss << "  help          : shows this help text\n" << reset << '\n';
 
-
         return oss.str();
     }
 }  // namespace tcpdb::base

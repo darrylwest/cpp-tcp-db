@@ -91,12 +91,14 @@ set(DEPENDENT_LIBRARIES
 add_executable(tcpdb-server
     ${SRC_DIR}/server.cpp
     ${SRC_DIR}/base.cpp
+    ${SRC_DIR}/termio.cpp
     ${SRC_DIR}/tcpdb.cpp
 )
 
 add_executable(tcpdb-client
     ${SRC_DIR}/client.cpp
     ${SRC_DIR}/base.cpp
+    ${SRC_DIR}/termio.cpp
     ${SRC_DIR}/repl.cpp
 )
 
@@ -106,8 +108,10 @@ add_executable(unit_tests
     tests/server_tests.cpp
     tests/client_tests.cpp
     tests/base_tests.cpp
+    tests/termio_tests.cpp
     ${SRC_DIR}/server.cpp
     ${SRC_DIR}/base.cpp
+    ${SRC_DIR}/termio.cpp
     ${SRC_DIR}/client.cpp
 )
 
