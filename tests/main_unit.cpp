@@ -8,14 +8,12 @@
 #include <catch2/catch_all.hpp>
 #include <print>
 #include <tcpdb/version.hpp>
-#include <vendor/ansi_colors.hpp>
 #include <vendor/perftimer.hpp>
 
 perftimer::PerfTimer timer("Catch2 Unit Tests");
 
 struct MainTestSetup {
     MainTestSetup() {
-        using namespace colors;
         spdlog::set_level(spdlog::level::critical);
 
         // do any config stuff
@@ -24,9 +22,10 @@ struct MainTestSetup {
     }
 
     ~MainTestSetup() {
-        using namespace colors;
+        // using namespace colors;
         timer.stop();
-        std::println("{}Tests complete...{}", bright::cyan, colors::reset);
+        // std::println("{}Tests complete...{}", bright::cyan, colors::reset);
+        std::puts("Tests complete...");
         timer.show_duration();
         // std::println("{}", timer.log.str());
     }

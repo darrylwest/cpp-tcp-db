@@ -30,5 +30,14 @@ TEST_CASE("Base tests", "[join]") {
 TEST_CASE("Base tests", "[help text]") {
     auto text = tcpdb::base::help_text();
 
-    REQUIRE(text.size() > 5);
+    REQUIRE(text.contains("tcp-db, version:"));
+    REQUIRE(text.size() > 600);
+    REQUIRE(text.size() < 1000);
+}
+
+TEST_CASE("Base tests", "[screen]") {
+
+    // auto line = colors::green + "This is a test\n" + colors::reset;
+
+    REQUIRE(true);
 }
