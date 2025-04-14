@@ -7,6 +7,7 @@
 #include <tcpdb/base.hpp>
 #include <tcpdb/config.hpp>
 #include <tcpdb/server.hpp>
+#include <tcpdb/version.hpp>
 #include <thread>
 
 auto create_test_config() {
@@ -20,22 +21,32 @@ auto create_test_config() {
 }
 
 TEST_CASE("Server tests", "[configure]") {
-    spdlog::set_level(spdlog::level::info);
     auto config = create_test_config();
 
     REQUIRE(config.server.host == "127.0.0.1");
     REQUIRE(config.server.port == 9944);
+}
 
-    /*
-     * TODO implement this with threads t1 to run the server, t2 for client
-    std::thread t([&config]() {
-        auto exit_code = tcpdb::server::start(config);
-        REQUIRE(exit_code == 0);
-    });
+TEST_CASE("Server tests", "[api-request][version]") {
+    spdlog::set_level(spdlog::level::info);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    tcpdb::server::shutdown();
+    auto resp = tcpdb::server::handle_request("version");
+    auto version = tcpdb::Version().to_string();
 
-    t.join();
-    */
+    REQUIRE(resp.text == version);
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+}
+
+TEST_CASE("Server tests", "[api-request][help]") {
+    spdlog::set_level(spdlog::level::info);
+
+    auto resp = tcpdb::server::handle_request("help");
+    auto help_text = tcpdb::base::help_text();
+
+    REQUIRE(resp.text == help_text);
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
 }

@@ -10,7 +10,6 @@
 #include <vector>
 
 TEST_CASE("Termio tests", "[wrap]") {
-    spdlog::set_level(spdlog::level::info);
     using namespace tcpdb::termio;
 
     const auto text = wrap("This is blue text.", Color::blue, Attr::bold);
@@ -26,7 +25,6 @@ TEST_CASE("Termio tests", "[wrap]") {
 }
 
 TEST_CASE("Termio tests", "[wrap][default-attr]") {
-    spdlog::set_level(spdlog::level::info);
     using namespace tcpdb::termio;
 
     const auto text = wrap("This is yellow text.", Color::yellow);
@@ -54,7 +52,6 @@ TEST_CASE("Termio tests", "[attrs][bold]") {
 }
 
 TEST_CASE("Termio tests", "[colors][bright]") {
-    spdlog::set_level(spdlog::level::info);
     using namespace tcpdb::termio;
 
     const auto bright_blue = to_string(Color::blue, true);
@@ -65,5 +62,18 @@ TEST_CASE("Termio tests", "[colors][bright]") {
     spdlog::info("{}normal blue{}", blue, reset());
     REQUIRE(true);
 
-    spdlog::set_level(spdlog::level::info);
+    spdlog::set_level(spdlog::level::critical);
+}
+
+TEST_CASE("Termio tests", "[colors][all-normal]") {
+    using namespace tcpdb::termio;
+
+    REQUIRE(black() == to_string(Color::black));
+    REQUIRE(red() == to_string(Color::red));
+    REQUIRE(green() == to_string(Color::green));
+    REQUIRE(yellow() == to_string(Color::yellow));
+    REQUIRE(blue() == to_string(Color::blue));
+    REQUIRE(magenta() == to_string(Color::magenta));
+    REQUIRE(cyan() == to_string(Color::cyan));
+    REQUIRE(white() == to_string(Color::white));
 }

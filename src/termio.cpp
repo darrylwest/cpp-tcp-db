@@ -113,6 +113,7 @@ namespace tcpdb::termio {
     const std::string green() { return to_string(Color::green); }
     const std::string yellow() { return to_string(Color::yellow); }
     const std::string blue() { return to_string(Color::blue); }
+    const std::string magenta() { return to_string(Color::magenta); }
     const std::string cyan() { return to_string(Color::cyan); }
     const std::string white() { return to_string(Color::white); }
     const std::string reset() { return to_string(Color::reset); }
