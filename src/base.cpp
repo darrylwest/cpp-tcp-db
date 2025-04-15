@@ -10,8 +10,17 @@
 #include <tcpdb/version.hpp>
 #include <thread>
 #include <vector>
+#include <ranges>
+#include <algorithm>
+#include <functional>
 
 namespace tcpdb::base {
+
+    auto create_cat_pair(const std::string& separator) {
+        return [separator](const std::string& a, const std::string& b) -> std::string {
+            return a.empty() ? b : a + separator + b;
+        };
+    }
 
     // parse the command
     std::optional<Command> parse_command(const std::string& input) {
@@ -43,18 +52,13 @@ namespace tcpdb::base {
     }
 
     // join the string array into a single comma delimited string
-    std::string join(const std::vector<std::string>& strs) {
-        std::ostringstream oss;
+    std::string join(const std::vector<std::string>& strs, const std::string& separator) {
+        auto cat_pair = create_cat_pair(separator);
 
-        for (size_t i = 0; i < strs.size(); ++i) {
-            if (i > 0) oss << ",";
-            oss << strs[i];
-        }
-
-        return oss.str();
+        return std::ranges::fold_left(strs.begin(), strs.end(), "", cat_pair);
     }
 
-    std::string help_text() {
+    const std::string help_text() {
         auto green = termio::to_string(termio::Color::green);
         auto reset = to_string(termio::Color::reset);
         auto cyan = termio::to_string(termio::Color::cyan);

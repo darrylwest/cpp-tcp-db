@@ -17,6 +17,9 @@ namespace tcpdb::base {
         std::optional<std::string> value;
     };
 
+    // create a concat pairs function that returns a lambda
+    auto create_cat_pair(const std::string& separator);
+
     // parse the command
     std::optional<Command> parse_command(const std::string& input);
 
@@ -24,10 +27,10 @@ namespace tcpdb::base {
     void remove_newlines(std::string& str);
 
     // join the string array into a single comma delimited string
-    std::string join(const std::vector<std::string>& strs);
+    std::string join(const std::vector<std::string>& strs, const std::string& separator = ",");
 
     // return the long help string with all commands
-    std::string help_text();
+    const std::string help_text();
 
     // create a new empty ostringstream
     const auto create_oss = []() { return std::ostringstream(); };

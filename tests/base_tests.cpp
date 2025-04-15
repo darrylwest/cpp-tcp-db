@@ -46,6 +46,9 @@ TEST_CASE("Base tests", "[join]") {
     auto line = tcpdb::base::join(tests);
 
     REQUIRE(line == "k1,k2,k3,k4");
+
+    line = tcpdb::base::join(tests, "-");
+    REQUIRE(line == "k1-k2-k3-k4");
 }
 
 TEST_CASE("Base tests", "[help text]") {
