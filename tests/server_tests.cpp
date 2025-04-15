@@ -38,6 +38,16 @@ TEST_CASE("Server tests", "[api-request][version]") {
     REQUIRE(resp.shutdown == false);
 }
 
+TEST_CASE("Server tests", "[api-request][ping]") {
+    auto resp = tcpdb::server::handle_request("ping");
+    auto version = tcpdb::Version().to_string();
+
+    REQUIRE(resp.text == "pong");
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+}
+
 TEST_CASE("Server tests", "[api-request][help]") {
     auto resp = tcpdb::server::handle_request("help");
     auto help_text = tcpdb::base::help_text();
@@ -49,6 +59,7 @@ TEST_CASE("Server tests", "[api-request][help]") {
 }
 
 TEST_CASE("Server test", "[api-request][get,set,remove]") {
+
     auto resp = tcpdb::server::handle_request("get flarb-not-found");
     INFO("response text: " + resp.text);
     REQUIRE(resp.text.contains("not found"));
@@ -57,7 +68,7 @@ TEST_CASE("Server test", "[api-request][get,set,remove]") {
 
     auto key = domainkeys::keys::create_route_key().to_string();
     auto value = "this is a test value";
-    std::ostringstream oss;
+    auto oss = tcpdb::base::create_oss();
 
     oss << "set " << key << " " << value << '\n';
 
@@ -67,9 +78,7 @@ TEST_CASE("Server test", "[api-request][get,set,remove]") {
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);
 
-    oss.str("");
-    oss.clear();
-
+    oss = tcpdb::base::create_oss();
     oss << "get " << key << '\n';
     INFO(oss.str());
     resp = tcpdb::server::handle_request(oss.str());
@@ -78,10 +87,7 @@ TEST_CASE("Server test", "[api-request][get,set,remove]") {
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);
 
-    // remove the value
-    oss.str("");
-    oss.clear();
-
+    oss = tcpdb::base::create_oss();
     oss << "remove " << key << '\n';
     INFO(oss.str());
     resp = tcpdb::server::handle_request(oss.str());
@@ -90,10 +96,7 @@ TEST_CASE("Server test", "[api-request][get,set,remove]") {
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);
 
-    // ensure it's gone
-    oss.str("");
-    oss.clear();
-
+    oss = tcpdb::base::create_oss();
     oss << "get " << key << '\n';
     INFO(oss.str());
     resp = tcpdb::server::handle_request(oss.str());

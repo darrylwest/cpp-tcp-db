@@ -29,4 +29,7 @@ namespace tcpdb::base {
     // return the long help string with all commands
     std::string help_text();
 
+    // create a new empty ostringstream
+    const auto create_oss = []() { return std::ostringstream(); };
+
 }  // namespace tcpdb::base
