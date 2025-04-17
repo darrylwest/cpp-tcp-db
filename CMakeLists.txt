@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.28)
 
 project(tcpdb VERSION 1.0.0)
 
@@ -57,6 +57,14 @@ find_package(nlohmann_json 3.2.0 REQUIRED)
 find_package(Catch2 3 REQUIRED)
 find_package(sockpp REQUIRED)
 
+find_library(TERMIO_LIBRARY NAMES termio PATHS /usr/local/lib)
+find_path(TERMIO_INCLUDE_DIR NAMES termio/termio.hpp PATHS /usr/local/include)
+
+if(NOT TERMIO_LIBRARY OR NOT TERMIO_INCLUDE_DIR)
+    message(FATAL_ERROR "termio not found")
+endif()
+
+
 # MacOS universal binary setup
 if(APPLE)
     execute_process(
@@ -85,6 +93,7 @@ set(DEPENDENT_LIBRARIES
         domainkeys
         quickkv
         sockpp
+        ${TERMIO_LIBRARY}
 )
 
 # Add executables
@@ -120,6 +129,7 @@ function(setup_target_properties target)
     target_include_directories(${target} PRIVATE
             ${INCLUDE_DIR}
             ${INCLUDE_DIR}/vendor
+            ${TERMIO_INCLUDE_DIR}
     )
     target_link_libraries(${target} PRIVATE ${DEPENDENT_LIBRARIES})
 
