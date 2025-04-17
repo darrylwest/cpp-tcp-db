@@ -2,17 +2,17 @@
 // 2024-12-09 10:28:16 dpw
 //
 
+#include <algorithm>
+#include <functional>
 #include <optional>
+#include <ranges>
 #include <sstream>
 #include <string>
 #include <tcpdb/base.hpp>
-#include <tcpdb/termio.hpp>
 #include <tcpdb/version.hpp>
+#include <termio/termio.hpp>
 #include <thread>
 #include <vector>
-#include <ranges>
-#include <algorithm>
-#include <functional>
 
 namespace tcpdb::base {
 
@@ -37,7 +37,7 @@ namespace tcpdb::base {
 
             // Read the rest of the line as the value (may contain spaces)
             std::string value;
-            std::getline(iss >> std::ws, value); // consume leading whitespace before getline
+            std::getline(iss >> std::ws, value);  // consume leading whitespace before getline
             cmd.value = value;
         } else {
             return std::nullopt;  // unknown command
@@ -59,16 +59,13 @@ namespace tcpdb::base {
     }
 
     const std::string help_text() {
-        auto green = termio::to_string(termio::Color::green);
-        auto reset = to_string(termio::Color::reset);
-        auto cyan = termio::to_string(termio::Color::cyan);
-        auto yellow = termio::to_string(termio::Color::yellow);
+        using namespace termio::termio;
 
         std::ostringstream oss;
         auto version = tcpdb::Version();
 
-        oss << green << "tcp-db, version: " << version << reset << '\n';
-        oss << cyan << "Command List\n" << yellow;
+        oss << green() << "tcp-db, version: " << version << reset_nl();
+        oss << cyan() << "Command List\n" << yellow();
         oss << "  get key       : returns the value from the key, or not found\n";
         oss << "  set key value : writes the value to the database using the key\n";
         oss << "  remove key    : removes the value from the database using the key\n";
@@ -81,7 +78,7 @@ namespace tcpdb::base {
         oss << "  status        : returns the server status, uptime, db size, etc.\n";
         oss << "  quit          : ends the socket session\n";
         oss << "  shutdown      : kills the server\n";
-        oss << "  help          : shows this help text\n" << reset << '\n';
+        oss << "  help          : shows this help text\n" << reset_nl();
 
         return oss.str();
     }

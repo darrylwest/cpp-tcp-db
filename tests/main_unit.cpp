@@ -7,8 +7,8 @@
 
 #include <catch2/catch_all.hpp>
 #include <print>
-#include <tcpdb/termio.hpp>
 #include <tcpdb/version.hpp>
+#include <termio/termio.hpp>
 #include <vendor/perftimer.hpp>
 
 perftimer::PerfTimer timer("Catch2 Unit Tests");
@@ -25,7 +25,7 @@ struct MainTestSetup {
     ~MainTestSetup() {
         timer.stop();
 
-        using namespace tcpdb::termio;
+        using namespace termio::termio;
 
         auto vers = tcpdb::Version().to_string();
         std::println("{}{}Tests complete, Version: {}{}...{}", bold(), cyan(), yellow(), vers, reset());

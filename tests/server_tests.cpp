@@ -59,7 +59,6 @@ TEST_CASE("Server tests", "[api-request][help]") {
 }
 
 TEST_CASE("Server test", "[api-request][get,set,remove]") {
-
     auto resp = tcpdb::server::handle_request("get flarb-not-found");
     INFO("response text: " + resp.text);
     REQUIRE(resp.text.contains("not found"));
