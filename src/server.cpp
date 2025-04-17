@@ -63,7 +63,7 @@ namespace tcpdb::server {
                 auto key = cmd->key.value();
 
                 if (auto value = store.get(key)) {
-                    return Response(value.value());
+                    return {value.value()};
                 }
 
                 return {"value not found for key: " + key, 404};
@@ -77,13 +77,13 @@ namespace tcpdb::server {
                 auto key = cmd->key.value();
 
                 if (store.remove(key)) {
-                    return Response("ok");
+                    return {"ok"};
                 }
 
-                return Response("could remove value; not-found key: " + key, 404);
+                return {"could remove value; not-found key: " + key, 404};
             }
 
-            return Response("bad request", 402);
+            return {"bad request", 402};
         }
 
         if (request.starts_with("txkey")) {
