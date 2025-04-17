@@ -27,20 +27,20 @@ namespace tcpdb::server {
     // handle the client request
     Response handle_request(const std::string& request) {
         if (request.starts_with("version")) {
-            return Response(tcpdb::Version().to_string());
+            return {tcpdb::Version().to_string()};
         }
 
         if (request == "help") {
-            return Response(base::help_text());
+            return {base::help_text()};
         }
 
         if (request.starts_with("ping")) {
-            return Response("pong");
+            return {"pong"};
         }
 
         if (request.starts_with("status")) {
             // TODO send the current timestamp, uptime, active connections, db size
-            return Response("all a-ok here.");
+            return {"all a-ok here."};
         }
 
         if (request.starts_with("set ")) {
@@ -49,13 +49,13 @@ namespace tcpdb::server {
                 auto value = cmd->value.value();
 
                 if (store.set(key, value)) {
-                    return Response("ok");
+                    return {"ok"};
                 }
 
-                return Response("could not set value for key: " + key, 402);
+                return {"could not set value for key: " + key, 402};
             }
 
-            return Response("bad request", 402);
+            return {"bad request", 402};
         }
 
         if (request.starts_with("get ")) {
@@ -66,10 +66,10 @@ namespace tcpdb::server {
                     return Response(value.value());
                 }
 
-                return Response("value not found for key: " + key, 404);
+                return {"value not found for key: " + key, 404};
             }
 
-            return Response("bad request", 402);
+            return {"bad request", 402};
         }
 
         if (request.starts_with("remove ")) {
@@ -87,39 +87,39 @@ namespace tcpdb::server {
         }
 
         if (request.starts_with("txkey")) {
-            return Response(domainkeys::keys::create_timestamp_key().to_string());
+            return {domainkeys::keys::create_timestamp_key().to_string()};
         }
 
         if (request.starts_with("rtkey")) {
-            return Response(domainkeys::keys::create_route_key().to_string());
+            return {domainkeys::keys::create_route_key().to_string()};
         }
 
         // TODO now trap for database requests
         if (request.starts_with("dbsize")) {
-            return Response(fmt::format("database size: {}", store.size()));
+            return {fmt::format("database size: {}", store.size())};
         }
 
         if (request.starts_with("keys")) {
             if (store.size() == 0) {
-                return Response("database is empty.");
+                return {"database is empty."};
             }
-            return Response(base::join(store.keys()));
+            return {base::join(store.keys())};
         }
 
         // the session terminators...
         if (request.starts_with("quit")) {
             spdlog::info("quit requested, closing connections");
-            return Response("quit session", 0, false, true);
+            return {"quit session", 0, false, true};
         }
 
         if (request.starts_with("shutdown")) {
             spdlog::info("shutdown requested, closing connections");
-            return Response("shutdown requested", 0, true, false);
+            return {"shutdown requested", 0, true, false};
         }
 
         // echo back with error set
         auto text = fmt::format("Unknown request: {}", request);
-        return Response(text, 401);
+        return {text, 401};
     }
 
     void handle_client(sockpp::tcp_socket sock) {
