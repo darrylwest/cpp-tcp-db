@@ -46,6 +46,12 @@ namespace tcpdb::server {
         if (request.starts_with("set ")) {
             if (auto cmd = base::parse_command(request)) {
                 auto key = cmd->key.value();
+                // if the key is txkey or rtkey then create a key
+                if (key == "txkey") {
+                    key = domainkeys::keys::create_timestamp_key().to_string();
+                    spdlog::info("created txkey: {}", key);
+                }
+
                 auto value = cmd->value.value();
 
                 if (store.set(key, value)) {
