@@ -55,6 +55,7 @@ namespace tcpdb::server {
                 auto value = cmd->value.value();
 
                 if (store.set(key, value)) {
+                    // TODO queue a database append
                     return {"ok"};
                 }
 
@@ -83,6 +84,7 @@ namespace tcpdb::server {
                 auto key = cmd->key.value();
 
                 if (store.remove(key)) {
+                    // TODO queue a full database write
                     return {"ok"};
                 }
 
@@ -183,6 +185,11 @@ namespace tcpdb::server {
             return 1;
         }
 
+        // TODO read the database
+        spdlog::info("reading database: {}", config.server.data_file);
+        store.read(config.server.data_file);
+        spdlog::info("database read: {}", store.size());
+
         // struct timeval timeout {config.server.timeout_seconds, 0};
         // spdlog::info("timeout set to {} seconds", config.server.timeout_seconds);
 
@@ -206,6 +213,12 @@ namespace tcpdb::server {
                 t.detach();
             }
         }
+
+        spdlog::info("writing database: {}, size: {}", config.server.data_file, store.size());
+        auto result = store.write(config.server.data_file);
+        spdlog::info("database write result: {}", result ? "ok" : "failed");
+
+        // save the database?
 
         // shutdown and close all the connections
         acceptor.shutdown();
