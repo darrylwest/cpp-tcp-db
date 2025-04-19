@@ -73,6 +73,9 @@ namespace tcpdb::base {
         oss << "  dbsize        : returns the number of keys in the database\n";
         oss << "  txkey         : create and return a new timestamp key\n";
         oss << "  rtkey         : create and return a new route key\n";
+        oss << "  name kcname   : set the kv store name\n";
+        oss << "  write_file    : write k/v store to file name\n";
+        oss << "  read_file     : read k/v into store to file, uses name\n";
         oss << "  version       : returns the current version\n";
         oss << "  ping          : pong\n";
         oss << "  status        : returns the server status, uptime, db size, etc.\n";
