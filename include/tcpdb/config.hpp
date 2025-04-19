@@ -14,7 +14,7 @@ namespace tcpdb::config {
         std::string host = "0.0.0.0";
         in_port_t port = 14500;
         bool encrypted = false;
-        std::string data = "data/server.db";
+        std::string data = "data/store.db";
         std::string logs = "logs/server.log";
         int timeout_seconds = 5;
 
