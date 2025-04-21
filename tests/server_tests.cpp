@@ -10,6 +10,7 @@
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
 #include <thread>
+#include <filesystem>
 
 auto create_test_config() {
     tcpdb::config::Config config;
@@ -199,6 +200,10 @@ TEST_CASE("Server test", "[api-request][status]") {
 }
 
 TEST_CASE("Server test", "[api-request][write]") {
+    try {
+        std::filesystem::create_directory("data");
+    } catch (...) {}
+
     auto resp = tcpdb::server::handle_request("write data/test.db");
 
     INFO("response text: " + resp.text);
