@@ -26,7 +26,7 @@ namespace tcpdb::base {
         Command cmd;
         if (!(iss >> cmd.name)) return std::nullopt;
 
-        if (cmd.name == "get" || cmd.name == "remove") {
+        if (cmd.name == "get" || cmd.name == "remove" || cmd.name == "write") {
             if (!(iss >> cmd.key.emplace())) return std::nullopt;
         } else if (cmd.name == "set") {
             std::string key;
@@ -68,9 +68,10 @@ namespace tcpdb::base {
         oss << "  set key value : writes the value to the database using the key\n";
         oss << "  remove key    : removes the value from the database using the key\n";
         oss << "  keys          : returns all the database keys\n";
+        oss << "  last n        : returns the last n elements of database\n";
+        oss << "  search term   : searches values for matches\n";
         oss << "  dbsize        : returns the number of keys in the database\n";
         oss << "  txkey         : create and return a new timestamp key\n";
-        oss << "  rtkey         : create and return a new route key\n";
         oss << "  write         : write k/v store to file name from configuration\n";
         oss << "  read          : read data file into k/v store,\n";
         oss << "  version       : returns the current version\n";

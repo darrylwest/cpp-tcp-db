@@ -17,6 +17,7 @@ auto create_test_config() {
     config.server.port = 9944;
     config.client.server_host = "127.0.0.1";
     config.client.connect_timeout = 5000;
+    config.server.data_file = "data/store.tmp";
 
     return config;
 }
@@ -26,6 +27,7 @@ TEST_CASE("Server tests", "[configure]") {
 
     REQUIRE(config.server.host == "127.0.0.1");
     REQUIRE(config.server.port == 9944);
+    REQUIRE(config.server.data_file == "data/store.tmp");
 }
 
 TEST_CASE("Server tests", "[api-request][version]") {
@@ -193,5 +195,19 @@ TEST_CASE("Server test", "[api-request][status]") {
     REQUIRE(resp.error_code == 0);
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);
+
+}
+
+TEST_CASE("Server test", "[api-request][write]") {
+    auto resp = tcpdb::server::handle_request("write data/test.db");
+
+    INFO("response text: " + resp.text);
+
+    REQUIRE(resp.text.contains("ok"));
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+
+    // TODO check to ensure the file exists
 }
 

@@ -84,7 +84,6 @@ namespace tcpdb::server {
                 auto key = cmd->key.value();
 
                 if (store.remove(key)) {
-                    // TODO queue a full database write
                     return {"ok"};
                 }
 
@@ -92,6 +91,20 @@ namespace tcpdb::server {
             }
 
             return {"bad request", 402};
+        }
+
+        if (request.starts_with("write ")) {
+            if (auto cmd = base::parse_command(request)) {
+                auto store_path = cmd->key.value();
+                spdlog::info("writing database: {}", store_path);
+                if (store.write(store_path)) {
+                    return {"ok"};
+                }
+                spdlog::error("could not write database: {}", store_path);
+                return {"could not write database file: " + store_path, 500};
+            }
+
+            return { "bad request, write needs destination"};
         }
 
         if (request.starts_with("txkey")) {
