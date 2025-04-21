@@ -104,6 +104,7 @@ namespace tcpdb::server {
                     }
                 } catch (const std::exception& e) {
                     spdlog::error("could not parse last command: {}", e.what());
+                    return {"bad request, could not parse last command", 401};
                 }
             }
 
