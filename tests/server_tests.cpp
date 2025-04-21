@@ -105,7 +105,7 @@ TEST_CASE("Server test", "[api-request][get,set,remove]") {
     REQUIRE(resp.error_code < 500);
 }
 
-TEST_CASE("Server test", "[api-request][dbsize]") {
+TEST_CASE("Server test", "[api-request][dbsize,set txkey]") {
     auto resp = tcpdb::server::handle_request("dbsize");
 
     INFO("response text: " + resp.text);
@@ -116,10 +116,9 @@ TEST_CASE("Server test", "[api-request][dbsize]") {
     REQUIRE(resp.shutdown == false);
 
     for (int i = 0; i < 10; i++) {
-        auto key = domainkeys::keys::create_route_key().to_string();
-        auto value = "this is a test value";
+        auto value = "this is a test value with auto-generated key";
         auto oss = tcpdb::base::create_oss();
-        oss << "set " << key << " " << value << '\n';
+        oss << "set " << "txkey " << value << '\n';
         INFO(oss.str());
         resp = tcpdb::server::handle_request(oss.str());
         REQUIRE(resp.text == "ok");
