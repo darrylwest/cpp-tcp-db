@@ -8,6 +8,7 @@
 #include <string>
 #include <tcpdb/base.hpp>
 #include <vector>
+#include <type_traits>
 
 TEST_CASE("Base tests", "[parse_command][name,key,value]") {
     using namespace tcpdb::base;
@@ -57,4 +58,19 @@ TEST_CASE("Base tests", "[help text]") {
     REQUIRE(text.contains("tcp-db, version:"));
     REQUIRE(text.size() > 600);
     REQUIRE(text.size() < 1000);
+}
+
+TEST_CASE("Base tests", "[to_number<T>]") {
+    auto text = "12345";
+
+    auto i = tcpdb::base::to_number<int>(text);
+
+    REQUIRE(i == 12345);
+
+    auto n = tcpdb::base::to_number<long>(text);
+    REQUIRE(n == 12345);
+
+    text = "800000000000";
+    auto s = tcpdb::base::to_number<size_t>(text);
+    REQUIRE(s == 800000000000);
 }

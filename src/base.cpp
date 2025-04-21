@@ -11,8 +11,6 @@
 #include <tcpdb/base.hpp>
 #include <tcpdb/version.hpp>
 #include <termio/termio.hpp>
-#include <thread>
-#include <vector>
 
 namespace tcpdb::base {
 
