@@ -93,6 +93,23 @@ namespace tcpdb::server {
             return {"bad request", 402};
         }
 
+        if (request.starts_with("last")) {
+            auto oss = base::create_oss();
+            if (auto cmd = base::parse_command(request)) {
+                try {
+                    const auto count = tcpdb::base::to_number<size_t>(cmd->key.value());
+                    auto mp = store.last(count);
+                    for (const auto& [k, v] : mp) {
+                        oss << k << " " << v << '\n';
+                    }
+                } catch (const std::exception& e) {
+                    spdlog::error("could not parse last command: {}", e.what());
+                }
+            }
+
+            return {oss.str()};
+        }
+
         if (request.starts_with("write ")) {
             if (auto cmd = base::parse_command(request)) {
                 auto store_path = cmd->key.value();
