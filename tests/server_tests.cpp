@@ -104,3 +104,95 @@ TEST_CASE("Server test", "[api-request][get,set,remove]") {
     REQUIRE(resp.error_code >= 400);
     REQUIRE(resp.error_code < 500);
 }
+
+TEST_CASE("Server test", "[api-request][dbsize]") {
+    auto resp = tcpdb::server::handle_request("dbsize");
+
+    INFO("response text: " + resp.text);
+
+    REQUIRE(resp.text == "0");
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+
+    for (int i = 0; i < 10; i++) {
+        auto key = domainkeys::keys::create_route_key().to_string();
+        auto value = "this is a test value";
+        auto oss = tcpdb::base::create_oss();
+        oss << "set " << key << " " << value << '\n';
+        INFO(oss.str());
+        resp = tcpdb::server::handle_request(oss.str());
+        REQUIRE(resp.text == "ok");
+        REQUIRE(resp.error_code == 0);
+        REQUIRE(resp.quit == false);
+        REQUIRE(resp.shutdown == false);
+    }
+
+    resp = tcpdb::server::handle_request("dbsize,cleardb");
+
+    INFO("response text: " + resp.text);
+
+    REQUIRE(resp.text == "10");
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+
+    resp = tcpdb::server::handle_request("cleardb");
+    INFO("response text: " + resp.text);
+    REQUIRE(resp.text == "ok");
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+
+    resp = tcpdb::server::handle_request("dbsize");
+    INFO("response text: " + resp.text);
+    REQUIRE(resp.text == "0");
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+}
+
+TEST_CASE("Server test", "[api-request][keys]") {
+    auto resp = tcpdb::server::handle_request("keys");
+
+    REQUIRE(resp.text.empty());
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+
+    auto key = domainkeys::keys::create_route_key().to_string();
+    auto value = "this is a test value";
+    auto oss = tcpdb::base::create_oss();
+    oss << "set " << key << " " << value << '\n';
+    INFO(oss.str());
+    resp = tcpdb::server::handle_request(oss.str());
+    REQUIRE(resp.text == "ok");
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+
+    resp = tcpdb::server::handle_request("keys");
+    INFO("response text: " + resp.text);
+    REQUIRE(resp.text == key);
+
+    oss = tcpdb::base::create_oss();
+    oss << "remove " << key << '\n';
+    INFO(oss.str());
+    resp = tcpdb::server::handle_request(oss.str());
+    REQUIRE(resp.text == "ok");
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+}
+
+TEST_CASE("Server test", "[api-request][status]") {
+    auto resp = tcpdb::server::handle_request("status");
+
+    INFO("response text: " + resp.text);
+
+    REQUIRE(resp.text.contains("ok"));
+    REQUIRE(resp.error_code == 0);
+    REQUIRE(resp.quit == false);
+    REQUIRE(resp.shutdown == false);
+}
+

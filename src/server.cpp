@@ -104,14 +104,18 @@ namespace tcpdb::server {
 
         // TODO now trap for database requests
         if (request.starts_with("dbsize")) {
-            return {fmt::format("database size: {}", store.size())};
+            return {fmt::format("{}", store.size())};
         }
 
         if (request.starts_with("keys")) {
-            if (store.size() == 0) {
-                return {"database is empty."};
-            }
             return {base::join(store.keys())};
+        }
+
+        if (request == "cleardb") {
+            for (auto& key : store.keys()) {
+                store.remove(key);
+            }
+            return {"ok"};
         }
 
         // the session terminators...
