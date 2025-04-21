@@ -212,7 +212,5 @@ TEST_CASE("Server test", "[api-request][write]") {
     REQUIRE(resp.error_code == 0);
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);
-
-    // TODO check to ensure the file exists
 }
 
