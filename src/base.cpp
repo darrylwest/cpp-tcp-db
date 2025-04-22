@@ -74,14 +74,14 @@ namespace tcpdb::base {
         // oss << "  search term   : searches values for matches\n";
         oss << "  dbsize        : returns the number of keys in the database\n";
         oss << "  txkey         : create and return a new timestamp key\n";
-        oss << "  write         : write k/v store to file name from configuration\n";
+        oss << "  save          : save k/v store to file\n";
         // oss << "  read          : read data file into k/v store,\n";
         oss << "  version       : returns the current version\n";
         oss << "  ping          : pong\n";
         oss << "  status        : returns the server status, uptime, db size, etc.\n";
         oss << "  quit          : ends the socket session\n";
         oss << "  shutdown      : kills the server\n";
-        oss << "  help          : shows this help text\n" << reset_nl();
+        oss << "  help          : shows this help text.\n" << reset();
 
         return oss.str();
     }

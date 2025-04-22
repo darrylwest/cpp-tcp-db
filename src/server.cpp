@@ -45,7 +45,8 @@ namespace tcpdb::server {
             using namespace std::chrono;
             auto uptime = duration_cast<seconds>(system_clock::now() - start_time);
             auto oss = base::create_oss();
-            oss << "ok, dbsize: " << store.size() << ", uptime: " << uptime << '\n';
+            oss << "ok, dbsize: " << store.size() << ", uptime: " << uptime;
+            oss << ", db file: " << store.get_default_path().string() << '\n';
             return {oss.str()};
         }
 
@@ -117,7 +118,7 @@ namespace tcpdb::server {
             return {oss.str()};
         }
 
-        if (request == "write") {
+        if (request == "save") {
             const auto& store_path = store.get_default_path();
             spdlog::info("writing database: {}", store_path.string());
             if (store.write(store_path)) {

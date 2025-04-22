@@ -5,11 +5,12 @@
 #include <spdlog/spdlog.h>
 #include <unistd.h>
 
+#include <print>
 #include <tcpdb/base.hpp>
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
-#include <print>
 #include <termio/termio.hpp>
+
 #include "spdlog/sinks/rotating_file_sink.h"
 
 constexpr int LOG_SIZE = 1'000'000;
@@ -26,11 +27,14 @@ void configure_logs(const std::string& logfile, const bool rolling) {
 }
 
 const char* BANNER = R"(
-  ________________            ____
- /_  __/ ____/ __ \      ____/ / /_
-  / / / /   / /_/ /_____/ __  / __ \
- / / / /___/ ____/_____/ /_/ / /_/ /
-/_/  \____/_/          \__,_/_.___/
+___________________________________
+   __                       ____
+  / /__________        ____/ / /_
+ / __/ ___/ __ \______/ __  / __ \
+/ /_/ /__/ /_/ /_____/ /_/ / /_/ /
+\__/\___/ .___/      \__,_/_.___/
+       /_/
+___________________________________
 )";
 
 int main() {

@@ -200,7 +200,7 @@ TEST_CASE("Server test", "[api-request][status]") {
     REQUIRE(resp.shutdown == false);
 }
 
-TEST_CASE("Server test", "[api-request][write]") {
+TEST_CASE("Server test", "[api-request][save]") {
     // this will set the store's test database
     create_test_config();
 
@@ -209,7 +209,7 @@ TEST_CASE("Server test", "[api-request][write]") {
     } catch (...) {
     }
 
-    auto resp = tcpdb::server::handle_request("write");
+    auto resp = tcpdb::server::handle_request("save");
 
     INFO("response text: " + resp.text);
 
