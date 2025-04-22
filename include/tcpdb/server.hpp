@@ -41,4 +41,7 @@ namespace tcpdb::server {
     // handle a client request
     Response handle_request(const std::string& request);
 
+    // set the store file path here
+    void set_store_path(const std::string& path);
+
 }  // namespace tcpdb::server

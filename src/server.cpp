@@ -111,18 +111,15 @@ namespace tcpdb::server {
             return {oss.str()};
         }
 
-        if (request.starts_with("write ")) {
-            if (auto cmd = base::parse_command(request)) {
-                auto store_path = cmd->key.value();
-                spdlog::info("writing database: {}", store_path);
-                if (store.write(store_path)) {
-                    return {"ok"};
-                }
-                spdlog::error("could not write database: {}", store_path);
-                return {"could not write database file: " + store_path, 500};
+        if (request == "write") {
+            const auto& store_path = store.get_default_path();
+            spdlog::info("writing database: {}", store_path.string());
+            if (store.write(store_path)) {
+                return {"ok"};
+            } else {
+                spdlog::error("could not write database: {}", store_path.string());
+                return {"could not write database file: " + store_path.string(), 500};
             }
-
-            return { "bad request, write needs destination"};
         }
 
         if (request.starts_with("txkey")) {
@@ -205,6 +202,12 @@ namespace tcpdb::server {
         sock.close();
     }
 
+
+    // set the store's path here
+    void set_store_path(const std::string& path) {
+        store.set_default_path(path);
+    }
+
     int start(const config::Config& config) {
         spdlog::info("Starting server: {}", config.to_string());
         spdlog::info("SockPP version: {}", sockpp::SOCKPP_VERSION);
@@ -222,8 +225,13 @@ namespace tcpdb::server {
 
         // TODO read the database
         spdlog::info("reading database: {}", config.server.data_file);
-        store.read(config.server.data_file);
-        spdlog::info("database read: {}", store.size());
+        if (store.read(config.server.data_file)) {
+            store.set_default_path(config.server.data_file);
+            spdlog::info("database read: {}", store.size());
+        } else {
+            spdlog::error("could not read database from: {}", config.server.data_file);
+        }
+
 
         // struct timeval timeout {config.server.timeout_seconds, 0};
         // spdlog::info("timeout set to {} seconds", config.server.timeout_seconds);

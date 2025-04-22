@@ -18,7 +18,9 @@ auto create_test_config() {
     config.server.port = 9944;
     config.client.server_host = "127.0.0.1";
     config.client.connect_timeout = 5000;
-    config.server.data_file = "data/store.tmp";
+    config.server.data_file = "data/test.db";
+
+    tcpdb::server::set_store_path(config.server.data_file);
 
     return config;
 }
@@ -28,7 +30,7 @@ TEST_CASE("Server tests", "[configure]") {
 
     REQUIRE(config.server.host == "127.0.0.1");
     REQUIRE(config.server.port == 9944);
-    REQUIRE(config.server.data_file == "data/store.tmp");
+    REQUIRE(config.server.data_file == "data/test.db");
 }
 
 TEST_CASE("Server tests", "[api-request][version]") {
@@ -200,11 +202,14 @@ TEST_CASE("Server test", "[api-request][status]") {
 }
 
 TEST_CASE("Server test", "[api-request][write]") {
+    // this will set the store's test database
+    create_test_config();
+
     try {
         std::filesystem::create_directory("data");
     } catch (...) {}
 
-    auto resp = tcpdb::server::handle_request("write data/test.db");
+    auto resp = tcpdb::server::handle_request("write");
 
     INFO("response text: " + resp.text);
 
