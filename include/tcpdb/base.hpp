@@ -4,11 +4,11 @@
 
 #pragma once
 
+#include <charconv>
 #include <optional>
+#include <stdexcept>
 #include <string>
 #include <vector>
-#include <charconv>
-#include <stdexcept>
 
 namespace tcpdb::base {
 
@@ -18,7 +18,6 @@ namespace tcpdb::base {
         std::optional<std::string> key;
         std::optional<std::string> value;
     };
-
 
     // create a concat pairs function that returns a lambda
     auto create_cat_pair(const std::string& separator);
@@ -39,8 +38,7 @@ namespace tcpdb::base {
     const auto create_oss = []() { return std::ostringstream(); };
 
     // convert the int, long, size_t, etc from string to T
-    template <typename T>
-    T to_number(const std::string& str) {
+    template <typename T> T to_number(const std::string& str) {
         T val;
         auto [ptr, ec] = std::from_chars(str.data(), str.data() + str.size(), val);
         if (ec != std::errc()) {

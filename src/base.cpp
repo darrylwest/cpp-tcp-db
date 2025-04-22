@@ -71,11 +71,11 @@ namespace tcpdb::base {
         oss << "  remove key    : removes the value from the database using the key\n";
         oss << "  keys          : returns all the database keys\n";
         oss << "  last n        : returns the last n elements of database\n";
-        oss << "  search term   : searches values for matches\n";
+        // oss << "  search term   : searches values for matches\n";
         oss << "  dbsize        : returns the number of keys in the database\n";
         oss << "  txkey         : create and return a new timestamp key\n";
         oss << "  write         : write k/v store to file name from configuration\n";
-        oss << "  read          : read data file into k/v store,\n";
+        // oss << "  read          : read data file into k/v store,\n";
         oss << "  version       : returns the current version\n";
         oss << "  ping          : pong\n";
         oss << "  status        : returns the server status, uptime, db size, etc.\n";

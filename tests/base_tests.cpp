@@ -7,8 +7,8 @@
 #include <catch2/catch_all.hpp>
 #include <string>
 #include <tcpdb/base.hpp>
-#include <vector>
 #include <type_traits>
+#include <vector>
 
 TEST_CASE("Base tests", "[parse_command][name,key,value]") {
     using namespace tcpdb::base;

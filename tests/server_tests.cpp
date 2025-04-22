@@ -5,12 +5,12 @@
 
 #include <catch2/catch_all.hpp>
 #include <domainkeys/keys.hpp>
+#include <filesystem>
 #include <tcpdb/base.hpp>
 #include <tcpdb/config.hpp>
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
 #include <thread>
-#include <filesystem>
 
 auto create_test_config() {
     tcpdb::config::Config config;
@@ -198,7 +198,6 @@ TEST_CASE("Server test", "[api-request][status]") {
     REQUIRE(resp.error_code == 0);
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);
-
 }
 
 TEST_CASE("Server test", "[api-request][write]") {
@@ -207,7 +206,8 @@ TEST_CASE("Server test", "[api-request][write]") {
 
     try {
         std::filesystem::create_directory("data");
-    } catch (...) {}
+    } catch (...) {
+    }
 
     auto resp = tcpdb::server::handle_request("write");
 
@@ -218,4 +218,3 @@ TEST_CASE("Server test", "[api-request][write]") {
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);
 }
-

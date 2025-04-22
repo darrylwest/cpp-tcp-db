@@ -22,6 +22,8 @@ namespace tcpdb::server {
 
     std::atomic_flag halt_threads = ATOMIC_FLAG_INIT;
 
+    const auto start_time = std::chrono::system_clock::now();
+
     quickkv::KVStore store;
 
     // handle the client request
@@ -39,8 +41,12 @@ namespace tcpdb::server {
         }
 
         if (request.starts_with("status")) {
-            // TODO send the current timestamp, uptime, active connections, db size
-            return {"all a-ok here."};
+            using namespace std::chrono_literals;
+            using namespace std::chrono;
+            auto uptime = duration_cast<seconds>(system_clock::now() - start_time);
+            auto oss = base::create_oss();
+            oss << "ok, dbsize: " << store.size() << ", uptime: " << uptime << '\n';
+            return {oss.str()};
         }
 
         if (request.starts_with("set ")) {
@@ -202,11 +208,8 @@ namespace tcpdb::server {
         sock.close();
     }
 
-
     // set the store's path here
-    void set_store_path(const std::string& path) {
-        store.set_default_path(path);
-    }
+    void set_store_path(const std::string& path) { store.set_default_path(path); }
 
     int start(const config::Config& config) {
         spdlog::info("Starting server: {}", config.to_string());
@@ -231,7 +234,6 @@ namespace tcpdb::server {
         } else {
             spdlog::error("could not read database from: {}", config.server.data_file);
         }
-
 
         // struct timeval timeout {config.server.timeout_seconds, 0};
         // spdlog::info("timeout set to {} seconds", config.server.timeout_seconds);
