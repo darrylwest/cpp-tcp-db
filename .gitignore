@@ -2,5 +2,5 @@ build
 .vscode
 .idea
 cmake-build-*
-logs/
+logs/*.log
 data/*.db
