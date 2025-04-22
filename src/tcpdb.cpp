@@ -8,6 +8,9 @@
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
 
+// configure the server logs
+
+
 int main() {
     const auto pid = getpid();
     const auto vers = tcpdb::Version();
