@@ -24,6 +24,8 @@ namespace tcpdb::server {
 
     const auto start_time = std::chrono::system_clock::now();
 
+    constexpr size_t BUFFER_SIZE = 10000;
+
     quickkv::KVStore store;
 
     // handle the client request
@@ -172,7 +174,7 @@ namespace tcpdb::server {
     void handle_client(sockpp::tcp_socket sock) {
         spdlog::info("handle client: {}", sock.peer_address().to_string());
 
-        char buf[512] = {0};
+        char buf[BUFFER_SIZE] = {0};
         sockpp::result<size_t> res;
 
         while ((res = sock.read(buf, sizeof(buf))) && res.value() > 0) {
