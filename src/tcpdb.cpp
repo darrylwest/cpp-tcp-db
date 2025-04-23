@@ -6,7 +6,6 @@
 #include <unistd.h>
 
 #include <print>
-#include <tcpdb/base.hpp>
 #include <tcpdb/server.hpp>
 #include <tcpdb/version.hpp>
 #include <termio/termio.hpp>
