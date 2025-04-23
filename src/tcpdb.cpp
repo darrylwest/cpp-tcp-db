@@ -17,6 +17,8 @@ constexpr int LOG_SIZE = 1'000'000;
 
 // configure the server logs
 void configure_logs(const std::string& logfile, const bool rolling) {
+    spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] [thread %t] %v");
+
     if (rolling) {
         auto logger = spdlog::rotating_logger_mt("tcpdb", logfile, LOG_SIZE, 3);
         spdlog::set_default_logger(logger);
