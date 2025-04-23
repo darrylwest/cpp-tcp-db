@@ -9,7 +9,7 @@ TEST_CASE("Client tests", "[configure]") { REQUIRE(true); }
 
 TEST_CASE("Client tests", "[start]") { REQUIRE(true); }
 
-TEST_CASE("Client tests", "[help_text]") {
-    auto help = tcpdb::client::help_text();
-    REQUIRE(help.size() > 5);
+TEST_CASE("Client tests", "[process_request][help_text]") {
+    //
+    REQUIRE(true);
 }

@@ -4,10 +4,10 @@
 
 #include <spdlog/spdlog.h>
 
-#include <tcpdb/client.hpp>
-#include <termio/termio.hpp>
-#include <tcpdb/version.hpp>
 #include <print>
+#include <tcpdb/client.hpp>
+#include <tcpdb/version.hpp>
+#include <termio/termio.hpp>
 
 const char* BANNER = R"(
 ___________________________________
@@ -25,6 +25,11 @@ int main() {
     const auto vers = tcpdb::Version();
     std::println("{}{}{}", green(), BANNER, reset());
     std::println("{}Client Application, {}Version: {}{}", cyan(), yellow(), vers.to_string(), reset());
+
+    // now start the file logger...
+
+    // start the repl...
+    tcpdb::client::request_loop();
 
     return 0;
 }
