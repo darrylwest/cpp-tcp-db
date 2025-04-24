@@ -29,20 +29,19 @@ namespace tcpdb::config {
 
         if (j.contains("server")) {
             const auto server = j["server"];
-            config.server.host = server["host"];
-            // config.server.port = server["port"].get<in_port_t>();
+            config.server.host = server["host"].get<std::string>();
             int port = server["port"].get<int>();
             config.server.port = static_cast<in_port_t>(port);
-            config.server.data_file = server["data_file"];
-            config.server.logs = server["logs"];
+            config.server.data_file = server["data_file"].get<std::string>();
+            config.server.logs = server["logs"].get<std::string>();
             config.server.timeout_seconds = server["timeout_seconds"].get<int>();
             // config.server.encrypted = server["encrypted"];
         }
 
         if (j.contains("client")) {
             const auto client = j["client"];
-            config.client.server_host = client["server_host"];
-            config.client.logs = client["logs"];
+            config.client.server_host = client["server_host"].get<std::string>();
+            config.client.logs = client["logs"].get<std::string>();
         }
 
         return config;
