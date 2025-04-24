@@ -25,20 +25,23 @@ namespace tcpdb::config {
         json j;
         ifs >> j;
 
+        ifs.close();
+
         if (j.contains("server")) {
             const auto server = j["server"];
             config.server.host = server["host"];
-            // config.server.port = server["port"];
+            // config.server.port = server["port"].get<in_port_t>();
+            int port = server["port"].get<int>();
+            config.server.port = static_cast<in_port_t>(port);
             config.server.data_file = server["data_file"];
             config.server.logs = server["logs"];
-            // config.server.timeout_seconds = server["timeout_seconds"];
+            config.server.timeout_seconds = server["timeout_seconds"].get<int>();
             // config.server.encrypted = server["encrypted"];
         }
 
         if (j.contains("client")) {
             const auto client = j["client"];
             config.client.server_host = client["server_host"];
-            // config.client.connect_timeout = client["connect_timeout"];
             config.client.logs = client["logs"];
         }
 
