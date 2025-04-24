@@ -56,7 +56,8 @@ namespace tcpdb::client {
                 continue;
             }
 
-            process_request(sock, request);
+            const auto resp = process_request(sock, request);
+            std::println("{}", resp.text);
             count++;
         }
     }
