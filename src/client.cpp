@@ -4,13 +4,14 @@
 
 #include <sockpp/tcp_socket.h>
 #include <spdlog/spdlog.h>
-#include <termio/termio.hpp>
+
 #include <iostream>
 #include <string>
 #include <tcpdb/base.hpp>
 #include <tcpdb/client.hpp>
 #include <tcpdb/config.hpp>
 #include <tcpdb/types.hpp>
+#include <termio/termio.hpp>
 
 #include "sockpp/tcp_connector.h"
 
@@ -42,7 +43,7 @@ namespace tcpdb::client {
         }
 
         const std::string text = resp.value() > 0 ? std::string(buf, resp.value()) : "ok";
-        return {text };
+        return {text};
     }
 
     void request_loop(sockpp::tcp_connector& sock) {
@@ -67,7 +68,7 @@ namespace tcpdb::client {
 
         using namespace std::chrono;
 
-        const auto host = "localhost"; // config.server.host.c_str();
+        const auto host = config.client.server_host.c_str();
         const auto port = config.server.port;
         sockpp::initialize();
 
@@ -85,6 +86,5 @@ namespace tcpdb::client {
 
         return 0;
     }
-
 
 }  // namespace tcpdb::client

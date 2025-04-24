@@ -4,9 +4,10 @@
 
 #pragma once
 
+#include <sockpp/tcp_connector.h>
+
 #include <string>
 #include <tcpdb/config.hpp>
-#include <sockpp/tcp_connector.h>
 
 namespace tcpdb::client {
     struct Response {
