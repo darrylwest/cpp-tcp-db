@@ -10,6 +10,8 @@
 #include <tcpdb/types.hpp>
 
 namespace tcpdb::config {
+    constexpr size_t BUFFER_SIZE = 10000;
+
     struct Server {
         std::string host = "0.0.0.0";
         in_port_t port = 14500;

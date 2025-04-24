@@ -26,10 +26,11 @@ int main() {
     std::println("{}{}{}", green(), BANNER, reset());
     std::println("{}Client Application, {}Version: {}{}", cyan(), yellow(), vers.to_string(), reset());
 
+    tcpdb::config::Config config;
     // now start the file logger...
 
     // start the repl...
-    tcpdb::client::request_loop();
+    tcpdb::client::start(config);
 
     return 0;
 }

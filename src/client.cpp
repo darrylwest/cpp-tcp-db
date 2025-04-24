@@ -32,9 +32,19 @@ namespace tcpdb::client {
             return;
         }
 
-        // send the request ; read the response
-        std::string response = "my reqest: " + request;
-        std::println("recv: {}", response);
+        char buf[config::BUFFER_SIZE] = {0};
+        const auto req = sock.write_n(request.c_str(), request.size());
+        if (req.is_error()) {
+            spdlog::error("error:{} {}", req.error().value(), req.error().message());
+        }
+
+        const auto resp = sock.read(buf, sizeof(buf));
+        if (resp.is_error()) {
+            spdlog::error("error:{} {}", req.error().value(), req.error().message());
+            return;
+        }
+
+        std::println("{}{}{}", blue(), resp.value(), reset());
     }
 
     void request_loop() {
@@ -62,14 +72,16 @@ namespace tcpdb::client {
         const auto host = "localhost"; // config.server.host.c_str();
         const auto port = config.server.port;
         sockpp::initialize();
-        const auto addr = sockpp::inet_address(host, port);
 
-        if (!sock.bind(addr)) {
-            spdlog::error("Could not connect to server: {}", config.server.host);
+        sockpp::tcp_connector sock;
+
+        // Attempt to connect with a 10 sec timeout.
+        if (auto res = sock.connect(host, port, 10s); !res) {
+            spdlog::error("Failed to connect to {}:{}: {}", host, port, res.error().message());
             return 1;
         }
 
-        std::println("{}socket connected{}", cyan(), reset());
+        std::println("{}socket connected on {}:{}{}", cyan(), host, port, reset());
 
         request_loop();
 
