@@ -42,11 +42,11 @@ TEST_CASE("Version tests", "[version]") {
     const auto vers = tcpdb::Version();
 
     REQUIRE(vers.major == 0);
-    REQUIRE(vers.minor == 3);
-    REQUIRE(vers.patch >= 3);
+    REQUIRE(vers.minor == 4);
+    REQUIRE(vers.patch >= 1);
     REQUIRE(vers.patch <= 10);
-    REQUIRE(vers.build >= 115);
+    REQUIRE(vers.build >= 135);
     REQUIRE(vers.build <= 999);
 
-    REQUIRE(vers.to_string().starts_with("0.3."));
+    REQUIRE(vers.to_string().starts_with("0.4."));
 }
