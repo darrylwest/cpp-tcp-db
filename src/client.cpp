@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <print>
 #include <tcpdb/base.hpp>
 #include <tcpdb/client.hpp>
 #include <tcpdb/config.hpp>
