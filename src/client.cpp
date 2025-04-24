@@ -20,7 +20,7 @@ namespace tcpdb::client {
     std::atomic_flag quit_repl = ATOMIC_FLAG_INIT;
 
     Response process_request(sockpp::tcp_connector& sock, const std::string& request) {
-        std::println("send: {}", request);
+        // std::println("send: {}", request);
         if (request == "quit") {
             quit_repl.test_and_set();
             return {"ok"};
