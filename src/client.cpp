@@ -18,18 +18,16 @@ namespace tcpdb::client {
     using namespace termio::termio;
 
     std::atomic_flag quit_repl = ATOMIC_FLAG_INIT;
-    sockpp::tcp_socket sock;
 
-    void process_request(const std::string& request) {
+    Response process_request(sockpp::tcp_connector& sock, const std::string& request) {
         std::println("send: {}", request);
         if (request == "quit") {
             quit_repl.test_and_set();
-            return;
+            return {"ok"};
         }
 
         if (request == "help") {
-            std::println("{}", tcpdb::base::help_text());
-            return;
+            return {base::help_text()};
         }
 
         char buf[config::BUFFER_SIZE] = {0};
@@ -40,14 +38,14 @@ namespace tcpdb::client {
 
         const auto resp = sock.read(buf, sizeof(buf));
         if (resp.is_error()) {
-            spdlog::error("error:{} {}", req.error().value(), req.error().message());
-            return;
+            return {req.error().message(), 500};
         }
 
-        std::println("{}{}{}", blue(), resp.value(), reset());
+        const std::string text = resp.value() > 0 ? std::string(buf, resp.value()) : "ok";
+        return {text };
     }
 
-    void request_loop() {
+    void request_loop(sockpp::tcp_connector& sock) {
         size_t count = 1;
         while (!quit_repl.test()) {
             std::string request;
@@ -58,7 +56,7 @@ namespace tcpdb::client {
                 continue;
             }
 
-            process_request(request);
+            process_request(sock, request);
             count++;
         }
     }
@@ -68,24 +66,24 @@ namespace tcpdb::client {
 
         using namespace std::chrono;
 
-        // connect to the server
         const auto host = "localhost"; // config.server.host.c_str();
         const auto port = config.server.port;
         sockpp::initialize();
 
-        sockpp::tcp_connector sock;
+        sockpp::tcp_connector connector;  // Renamed to connector to be clear
 
         // Attempt to connect with a 10 sec timeout.
-        if (auto res = sock.connect(host, port, 10s); !res) {
+        if (auto res = connector.connect(host, port, 10s); !res) {
             spdlog::error("Failed to connect to {}:{}: {}", host, port, res.error().message());
             return 1;
         }
 
         std::println("{}socket connected on {}:{}{}", cyan(), host, port, reset());
 
-        request_loop();
+        request_loop(connector);
 
         return 0;
     }
+
 
 }  // namespace tcpdb::client

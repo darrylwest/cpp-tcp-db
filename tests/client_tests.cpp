@@ -10,6 +10,8 @@ TEST_CASE("Client tests", "[configure]") { REQUIRE(true); }
 TEST_CASE("Client tests", "[start]") { REQUIRE(true); }
 
 TEST_CASE("Client tests", "[process_request][help_text]") {
-    //
+    // const auto request = "help";
+    // tcpdb::client::process_request(request);
+
     REQUIRE(true);
 }
