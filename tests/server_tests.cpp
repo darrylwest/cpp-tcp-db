@@ -126,7 +126,7 @@ TEST_CASE("Server test", "[api-request][dbsize,set txkey]") {
         oss << "set " << "txkey " << value << '\n';
         INFO(oss.str());
         resp = tcpdb::server::handle_request(oss.str());
-        REQUIRE(resp.text == "ok");
+        REQUIRE(resp.text.starts_with("ok"));
         REQUIRE(resp.error_code == 0);
         REQUIRE(resp.quit == false);
         REQUIRE(resp.shutdown == false);
@@ -170,7 +170,7 @@ TEST_CASE("Server test", "[api-request][keys]") {
     oss << "set " << key << " " << value << '\n';
     INFO(oss.str());
     resp = tcpdb::server::handle_request(oss.str());
-    REQUIRE(resp.text == "ok");
+    REQUIRE(resp.text.starts_with("ok"));
     REQUIRE(resp.error_code == 0);
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);
@@ -183,7 +183,7 @@ TEST_CASE("Server test", "[api-request][keys]") {
     oss << "remove " << key << '\n';
     INFO(oss.str());
     resp = tcpdb::server::handle_request(oss.str());
-    REQUIRE(resp.text == "ok");
+    REQUIRE(resp.text.starts_with("ok"));
     REQUIRE(resp.error_code == 0);
     REQUIRE(resp.quit == false);
     REQUIRE(resp.shutdown == false);

@@ -63,10 +63,10 @@ namespace tcpdb::server {
 
                 if (store.set(key, value)) {
                     // TODO queue a database append
-                    return {"ok"};
+                    return {"ok, inserted new key/value."};
+                } else {
+                    return {"ok, updated existing value."};
                 }
-
-                return {"could not set value for key: " + key, 402};
             }
 
             return {"bad request", 402};

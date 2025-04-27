@@ -15,8 +15,8 @@ namespace tcpdb {
     struct Version {
         int major = 0;
         int minor = 4;
-        int patch = 1;
-        int build = 139;
+        int patch = 2;
+        int build = 140;
 
         friend std::ostream& operator<<(std::ostream& os, const Version v) {
             // better to use <format> but it breaks on linux and fmt broken on darwin
