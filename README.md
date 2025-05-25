@@ -32,4 +32,22 @@ A tcp database with REPL.
 * start the service
 * run the repl
 
-###### 2025.04.11 | dpw
+## Configuration
+
+### Server
+
+* home folder ~/.tcpdb/
+* .tcpdb/bin/tcpdb-server   : the server/runner
+* .tcpdb/logs/server.log    : rolling log file
+* .tcpdb/config/config.json : server (and client) configuration
+* .tcpdb/data/store.db      : the db file
+* .tcpdb/data/store.db      : the db file
+
+### Client
+
+* home: ~/.dbclient
+* .dbclient/bin/tcpdb-client
+* .dbclient/config/config.json
+
+
+###### 2025.05.25 | dpw
