@@ -7,7 +7,7 @@
         "timeout_seconds": 5
     },
     "client": {
-        "server_host": "alamo",
+        "server_host": "localhost",
         "port": 14500,
         "logs": "logs/client.log"
     }

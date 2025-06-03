@@ -6,8 +6,8 @@
 #include <spdlog/spdlog.h>
 
 #include <iostream>
-#include <string>
 #include <print>
+#include <string>
 #include <tcpdb/base.hpp>
 #include <tcpdb/client.hpp>
 #include <tcpdb/config.hpp>

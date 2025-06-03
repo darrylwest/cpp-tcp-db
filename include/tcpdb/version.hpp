@@ -14,9 +14,9 @@ namespace tcpdb {
     // version numbers are year.month.day.build where the year/month/day is the release date
     struct Version {
         int major = 0;
-        int minor = 4;
-        int patch = 2;
-        int build = 140;
+        int minor = 5;
+        int patch = 1;
+        int build = 141;
 
         friend std::ostream& operator<<(std::ostream& os, const Version v) {
             // better to use <format> but it breaks on linux and fmt broken on darwin

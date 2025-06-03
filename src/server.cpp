@@ -100,7 +100,7 @@ namespace tcpdb::server {
             return {"bad request", 402};
         }
 
-        if (request.starts_with("last")) {
+        if (request.starts_with("last") or request.starts_with("list")) {
             auto oss = base::create_oss();
             if (auto cmd = base::parse_command(request)) {
                 try {
@@ -121,7 +121,7 @@ namespace tcpdb::server {
         if (request == "save") {
             const auto& store_path = store.get_default_path();
             spdlog::info("writing database: {}", store_path.string());
-            if (store.write(store_path)) {
+            if (store.write()) {
                 return {"ok"};
             } else {
                 spdlog::error("could not write database: {}", store_path.string());
@@ -229,8 +229,8 @@ namespace tcpdb::server {
 
         // TODO read the database
         spdlog::info("reading database: {}", config.server.data_file);
-        if (store.read(config.server.data_file)) {
-            store.set_default_path(config.server.data_file);
+        store.set_default_path(config.server.data_file);
+        if (store.read()) {
             spdlog::info("database read: {}", store.size());
         } else {
             spdlog::error("could not read database from: {}", config.server.data_file);
@@ -260,11 +260,12 @@ namespace tcpdb::server {
             }
         }
 
-        spdlog::info("writing database: {}, size: {}", config.server.data_file, store.size());
-        auto result = store.write(config.server.data_file);
-        spdlog::info("database write result: {}", result ? "ok" : "failed");
-
-        // save the database?
+        // save the database if dirty
+        if (store.is_dirty()) {
+            spdlog::info("writing database: {}, size: {}", config.server.data_file, store.size());
+            auto result = store.write();
+            spdlog::info("database write result: {}", result ? "ok" : "failed");
+        }
 
         // shutdown and close all the connections
         acceptor.shutdown();

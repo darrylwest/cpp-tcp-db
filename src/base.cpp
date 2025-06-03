@@ -71,6 +71,7 @@ namespace tcpdb::base {
         oss << "  remove key    : removes the value from the database using the key\n";
         oss << "  keys          : returns all the database keys\n";
         oss << "  last n        : returns the last n elements of database\n";
+        oss << "  list n        : alias for last\n";
         // oss << "  search term   : searches values for matches\n";
         oss << "  dbsize        : returns the number of keys in the database\n";
         oss << "  txkey         : create and return a new timestamp key\n";
