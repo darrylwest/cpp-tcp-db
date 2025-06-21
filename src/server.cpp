@@ -100,7 +100,7 @@ namespace tcpdb::server {
             return {"bad request", 402};
         }
 
-        if (request.starts_with("last") or request.starts_with("list")) {
+        if (request.starts_with("last") || request.starts_with("list")) {
             auto oss = base::create_oss();
             if (auto cmd = base::parse_command(request)) {
                 try {

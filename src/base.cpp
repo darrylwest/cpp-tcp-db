@@ -28,7 +28,7 @@ namespace tcpdb::base {
 
         if (cmd.name == "get" || cmd.name == "remove" || cmd.name == "write" || cmd.name == "read") {
             if (!(iss >> cmd.key.emplace())) return std::nullopt;
-        } else if (cmd.name == "last") {
+        } else if (cmd.name == "last" || cmd.name == "list") {
             if (!(iss >> cmd.key.emplace())) cmd.key = "100";
         } else if (cmd.name == "set") {
             std::string key;
