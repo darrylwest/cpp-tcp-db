@@ -1,0 +1,9 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: darrylwest/ubuntu-24.10-gcc-14.2:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build with g++
+        run: g++ --version
